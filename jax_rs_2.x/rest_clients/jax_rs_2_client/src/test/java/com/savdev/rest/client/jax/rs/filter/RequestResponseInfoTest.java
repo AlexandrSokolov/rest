@@ -34,10 +34,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-@WireMockTest(httpPort = RequestResponseInfoTest.HTTP_PORT)
+@WireMockTest
 public class RequestResponseInfoTest extends BaseTest {
 
-  public static final int HTTP_PORT = 8081;
   public static final String HTTP_URL = "http://localhost";
   public static final String TEST_URL = "/test";
 
@@ -150,7 +149,7 @@ public class RequestResponseInfoTest extends BaseTest {
   }
 
   @Test
-  public void testNotTextualResponse(WireMockRuntimeInfo wmRuntimeInfo) throws IOException {
+  public void testNotTextualResponse(WireMockRuntimeInfo wmRuntimeInfo) {
     WireMock wireMock = wmRuntimeInfo.getWireMock();
     wireMock.register(get(TEST_URL)
       .willReturn(

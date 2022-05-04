@@ -16,12 +16,13 @@ import java.util.Set;
 public class RequestResponseUtils {
 
   private static final int DEFAULT_MAX_ENTITY_SIZE = 8 * 1024;
-  private static Set<String> TEXT_CONTENT_HEADERS = Sets.newHashSet(
+  private static final Set<String> TEXT_CONTENT_HEADERS = Sets.newHashSet(
     MediaType.APPLICATION_JSON,
     MediaType.APPLICATION_XML,
     MediaType.TEXT_PLAIN,
     MediaType.TEXT_XML,
-    MediaType.TEXT_HTML);
+    MediaType.TEXT_HTML,
+    "gzip");
 
   public static String extractResponseBody(
     final ClientResponseContext responseContext){
