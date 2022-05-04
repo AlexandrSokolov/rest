@@ -149,6 +149,44 @@ public class RequestResponseInfoTest extends BaseTest {
     }
   }
 
+  @Test
+  public void testNotTextualResponse(WireMockRuntimeInfo wmRuntimeInfo) throws IOException {
+    WireMock wireMock = wmRuntimeInfo.getWireMock();
+    wireMock.register(get(TEST_URL)
+      .willReturn(
+        ok()
+          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_OCTET_STREAM)
+          .withBodyFile(USER_JSON)));
+
+    TestClientResponseFilter f = TestClientResponseFilter.instance(new ObjectMapper());
+
+    Assertions.assertNull(f.getRequestResponseInfo());
+
+    Client client = ClientBuilder.newBuilder()
+      .build();
+    client.register(f);
+
+    WebTarget target = client.target(wmRuntimeInfo.getHttpBaseUrl() + TEST_URL);
+    try (Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get()) {
+
+      RequestResponseInfo rri = f.getRequestResponseInfo();
+
+      Assertions.assertNotNull(rri);
+
+      //check requests information
+      Assertions.assertFalse(rri.getRequestBody().isPresent());
+
+      //check response information
+      Assertions.assertEquals(HttpStatus.SC_OK, rri.getResponseStatus());
+
+      //key check here, response should not be parsed, if content is not text-based
+      Assertions.assertFalse(rri.getResponseBody().isPresent());
+
+      //make sure we still can read the entity:
+      Assertions.assertFalse(response.readEntity(String.class).isEmpty());
+    }
+  }
+
   private ClientRequestContext mockRequest() {
     ClientRequestContext clientRequestContext = mock(ClientRequestContext.class);
     when(clientRequestContext.getUri()).thenReturn(URI.create(HTTP_URL));

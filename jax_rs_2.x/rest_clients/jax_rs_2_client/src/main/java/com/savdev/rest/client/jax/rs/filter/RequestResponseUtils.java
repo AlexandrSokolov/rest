@@ -1,16 +1,27 @@
 package com.savdev.rest.client.jax.rs.filter;
 
+import com.google.common.collect.Sets;
+
 import javax.ws.rs.client.ClientResponseContext;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+import java.util.Set;
 
 public class RequestResponseUtils {
 
   private static final int DEFAULT_MAX_ENTITY_SIZE = 8 * 1024;
+  private static Set<String> TEXT_CONTENT_HEADERS = Sets.newHashSet(
+    MediaType.APPLICATION_JSON,
+    MediaType.APPLICATION_XML,
+    MediaType.TEXT_PLAIN,
+    MediaType.TEXT_XML,
+    MediaType.TEXT_HTML);
 
   public static String extractResponseBody(
     final ClientResponseContext responseContext){
@@ -18,8 +29,9 @@ public class RequestResponseUtils {
       //it could be `Transfer-Encoding: chunked` with no `Content Length` header
       //the following check might not pass:
       //if (responseContext.getLength() > 0 && responseContext.hasEntity())
-      if (responseContext.hasEntity()
-        || Optional.ofNullable(responseContext.getEntityStream()).isPresent()) {
+      if (isTextualResponse(responseContext)
+        && ( responseContext.hasEntity()
+          || Optional.ofNullable(responseContext.getEntityStream()).isPresent())) {
 
         InputStream is = isGzip(responseContext) ?
           extractedFromGzipAndClearEncoding(responseContext.getEntityStream()) : responseContext.getEntityStream();
@@ -29,7 +41,7 @@ public class RequestResponseUtils {
         responseContext.setEntityStream(is);
         if (isGzip(responseContext)) {
           //after extracting input stream, we reset content encoding
-          responseContext.getHeaders().remove("Content-Encoding");
+          responseContext.getHeaders().remove(HttpHeaders.CONTENT_ENCODING);
         }
 
         final Charset responseCharset =
@@ -71,8 +83,8 @@ public class RequestResponseUtils {
 
   private static boolean isGzip(final ClientResponseContext responseContext) {
     return responseContext.getHeaders() != null
-      && responseContext.getHeaders().containsKey("Content-Encoding")
-      && responseContext.getHeaders().getFirst("Content-Encoding").equalsIgnoreCase("gzip");
+      && responseContext.getHeaders().containsKey(HttpHeaders.CONTENT_ENCODING)
+      && responseContext.getHeaders().getFirst(HttpHeaders.CONTENT_ENCODING).equalsIgnoreCase("gzip");
   }
 
   private static InputStream extractedFromGzipAndClearEncoding(final InputStream gzippedStream) {
@@ -81,6 +93,13 @@ public class RequestResponseUtils {
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
+  }
+
+  private static boolean isTextualResponse(final ClientResponseContext responseContext){
+    return responseContext.getHeaders() != null
+      && responseContext.getHeaders().containsKey(HttpHeaders.CONTENT_ENCODING)
+      && TEXT_CONTENT_HEADERS.stream().anyMatch(header ->
+      responseContext.getHeaders().getFirst(HttpHeaders.CONTENT_ENCODING).equalsIgnoreCase(header));
   }
 
 }
