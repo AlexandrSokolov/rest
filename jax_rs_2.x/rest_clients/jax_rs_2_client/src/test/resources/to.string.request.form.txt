@@ -1,0 +1,12 @@
+RequestResponseInfo {
+	URL = http://localhost,
+	HTTP Method = 'POST',
+	Request Headers = {Content-Encoding=[application/x-www-form-urlencoded], Accept-Encoding=[application/json]},
+	Request Body = {
+  "original form" : "user=Alex S",
+  "url encoded" : "user=Alex+S"
+},
+	Response Status=200,
+	Response Headers={Content-Encoding=[application/json]},
+	Response Body=NO RESPONSE BODY
+}
