@@ -21,11 +21,10 @@ public class RequestResponseUtils {
       if (responseContext.hasEntity()
         || Optional.ofNullable(responseContext.getEntityStream()).isPresent()) {
 
-        final InputStream isMarkSupported = responseContext.getEntityStream().markSupported() ?
-          responseContext.getEntityStream() : new BufferedInputStream(responseContext.getEntityStream());
+        InputStream is = isGzip(responseContext) ?
+          extractedFromGzipAndClearEncoding(responseContext.getEntityStream()) : responseContext.getEntityStream();
 
-        final InputStream is = isGzip(responseContext) ?
-          extractedFromGzipAndClearEncoding(isMarkSupported) : isMarkSupported;
+        is = is.markSupported() ? is : new BufferedInputStream(is);
 
         responseContext.setEntityStream(is);
         if (isGzip(responseContext)) {

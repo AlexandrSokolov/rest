@@ -13,20 +13,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
-import javax.ws.rs.client.ClientResponseFilter;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
-
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -40,7 +37,7 @@ import static org.mockito.Mockito.when;
 @WireMockTest(httpPort = RequestResponseInfoTest.HTTP_PORT)
 public class RequestResponseInfoTest extends BaseTest {
 
-  public static final int HTTP_PORT = 8080;
+  public static final int HTTP_PORT = 8081;
   public static final String HTTP_URL = "http://localhost";
   public static final String TEST_URL = "/test";
 
@@ -113,7 +110,7 @@ public class RequestResponseInfoTest extends BaseTest {
 
     TestClientResponseFilter f = TestClientResponseFilter.instance(new ObjectMapper());
 
-    Assertions.assertNull(f.requestResponseInfo);
+    Assertions.assertNull(f.getRequestResponseInfo());
 
     Client client = ClientBuilder.newBuilder()
       .build();
@@ -122,26 +119,30 @@ public class RequestResponseInfoTest extends BaseTest {
     WebTarget target = client.target(wmRuntimeInfo.getHttpBaseUrl() + TEST_URL);
     try (Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get()) {
 
+      RequestResponseInfo rri = f.getRequestResponseInfo();
+
+      Assertions.assertNotNull(rri);
+
       //check requests information
-      Assertions.assertEquals(HttpMethod.GET, f.requestResponseInfo.getHttpMethod());
+      Assertions.assertEquals(HttpMethod.GET, rri.getHttpMethod());
       Assertions.assertEquals(
         URI.create(wmRuntimeInfo.getHttpBaseUrl() + TEST_URL),
-        f.requestResponseInfo.getUrl());
+        rri.getUrl());
       Assertions.assertEquals(
         new MultivaluedHashMap<>(ImmutableMap.of(
           HttpHeaders.ACCEPT,
           MediaType.APPLICATION_JSON)),
-        f.requestResponseInfo.getRequestHeaders());
-      Assertions.assertFalse(f.requestResponseInfo.getRequestBody().isPresent());
+        rri.getRequestHeaders());
+      Assertions.assertFalse(rri.getRequestBody().isPresent());
 
       //check response information
-      Assertions.assertEquals(HttpStatus.SC_OK, f.requestResponseInfo.getResponseStatus());
-      Assertions.assertTrue(f.requestResponseInfo.getResponseBody().isPresent());
+      Assertions.assertEquals(HttpStatus.SC_OK, rri.getResponseStatus());
+      Assertions.assertTrue(rri.getResponseBody().isPresent());
       Assertions.assertEquals(
         IOUtils.toString(testInputStream(WIRE_MOCK_RESOURSES_FILES + USER_JSON),
           StandardCharsets.UTF_8),
-        f.requestResponseInfo.getResponseBody().get());
-      Assertions.assertFalse(f.requestResponseInfo.getResponseHeaders().isEmpty());
+        rri.getResponseBody().get());
+      Assertions.assertFalse(rri.getResponseHeaders().isEmpty());
 
       //make sure we still can read the entity:
       Assertions.assertFalse(response.readEntity(String.class).isEmpty());
@@ -164,23 +165,5 @@ public class RequestResponseInfoTest extends BaseTest {
         MediaType.APPLICATION_JSON)));
     when(clientResponseContext.hasEntity()).thenReturn(false);
     return clientResponseContext;
-  }
-
-  private static class TestClientResponseFilter implements ClientResponseFilter {
-
-    private RequestResponseInfo requestResponseInfo;
-    private ObjectMapper objectMapper;
-
-    public static TestClientResponseFilter instance(final ObjectMapper objectMapper) {
-      TestClientResponseFilter f = new TestClientResponseFilter();
-      f.objectMapper = objectMapper;
-      return f;
-    }
-
-    @Override
-    public void filter(ClientRequestContext clientRequestContext, ClientResponseContext clientResponseContext) {
-      requestResponseInfo = RequestResponseInfo.clientInstance(
-        this.objectMapper, clientRequestContext, clientResponseContext);
-    }
   }
 }
