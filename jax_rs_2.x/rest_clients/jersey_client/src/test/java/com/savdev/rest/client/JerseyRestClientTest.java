@@ -1,4 +1,4 @@
-package com.savdev.rest.client.jax.rs;
+package com.savdev.rest.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 
 import java.time.LocalDateTime;
 import java.util.AbstractMap;
-import java.util.Date;
 import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -29,12 +28,12 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 @WireMockTest
-public class JaxRsClientTest {
+public class JerseyRestClientTest {
 
   public static final String HTTP_URL = "/test";
   public static final String USER_JSON = "responses/user.json";
 
-  JaxRsClient jaxRsClient = new JaxRsClient();
+  JerseyRestClient jaxRsClient = new JerseyRestClient();
 
   @Test
   public void testSendRequest(WireMockRuntimeInfo wmRuntimeInfo) {

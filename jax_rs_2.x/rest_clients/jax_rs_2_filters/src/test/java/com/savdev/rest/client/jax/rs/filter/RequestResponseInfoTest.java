@@ -7,7 +7,6 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.google.common.collect.ImmutableMap;
 import com.test.commons.test.BaseTest;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
 import org.jboss.resteasy.client.jaxrs.internal.ResteasyClientBuilderImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -135,7 +134,7 @@ public class RequestResponseInfoTest extends BaseTest {
       Assertions.assertFalse(rri.getRequestBody().isPresent());
 
       //check response information
-      Assertions.assertEquals(HttpStatus.SC_OK, rri.getResponseStatus());
+      Assertions.assertEquals(Response.Status.OK.getStatusCode(), rri.getResponseStatus());
       Assertions.assertTrue(rri.getResponseBody().isPresent());
       Assertions.assertEquals(
         IOUtils.toString(testInputStream(WIRE_MOCK_RESOURSES_FILES + USER_JSON),
@@ -176,7 +175,7 @@ public class RequestResponseInfoTest extends BaseTest {
       Assertions.assertFalse(rri.getRequestBody().isPresent());
 
       //check response information
-      Assertions.assertEquals(HttpStatus.SC_OK, rri.getResponseStatus());
+      Assertions.assertEquals(Response.Status.OK.getStatusCode(), rri.getResponseStatus());
 
       //key check here, response should not be parsed, if content is not text-based
       Assertions.assertFalse(rri.getResponseBody().isPresent());
@@ -195,7 +194,7 @@ public class RequestResponseInfoTest extends BaseTest {
 
   private ClientResponseContext mockResponse() {
     ClientResponseContext clientResponseContext = mock(ClientResponseContext.class);
-    when(clientResponseContext.getStatus()).thenReturn(HttpStatus.SC_OK);
+    when(clientResponseContext.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
     when(clientResponseContext.getHeaders()).thenReturn(
       new MultivaluedHashMap<>(ImmutableMap.of(
         HttpHeaders.CONTENT_ENCODING,

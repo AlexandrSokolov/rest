@@ -1,4 +1,4 @@
-package com.savdev.rest.client.jax.rs;
+package com.savdev.rest.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -16,10 +16,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
-
 import java.time.LocalDateTime;
 import java.util.AbstractMap;
-import java.util.Date;
 import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -29,12 +27,12 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 @WireMockTest
-public class JaxRsClientTest {
+public class ExampleResteasyClientTest {
 
   public static final String HTTP_URL = "/test";
   public static final String USER_JSON = "responses/user.json";
 
-  JaxRsClient jaxRsClient = new JaxRsClient();
+  ExampleResteasyClient resteasyClient = new ExampleResteasyClient();
 
   @Test
   public void testSendRequest(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -46,7 +44,7 @@ public class JaxRsClientTest {
           .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
           .withBodyFile(USER_JSON)));
 
-    try (Response response = jaxRsClient.sendRequest(
+    try (Response response = resteasyClient.sendRequest(
       wmRuntimeInfo.getHttpBaseUrl() + HTTP_URL,
       HttpMethod.POST,
       new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT_ENCODING, MediaType.APPLICATION_JSON)),
@@ -77,7 +75,7 @@ public class JaxRsClientTest {
         aResponse()
           .withStatus(Response.Status.CONFLICT.getStatusCode())));
 
-    try (Response response = jaxRsClient.sendRequest(
+    try (Response response = resteasyClient.sendRequest(
       wmRuntimeInfo.getHttpBaseUrl() + HTTP_URL,
       HttpMethod.POST,
       new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT_ENCODING, MediaType.APPLICATION_JSON)),

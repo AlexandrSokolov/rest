@@ -19,7 +19,10 @@
     <logback.version>1.2.11</logback.version>
 
     <jackson.bom.version>2.13.2.1</jackson.bom.version>
+    <!--  this is the last resteasy version, that supports jax rs 2:-->
     <resteasy.bom.version>5.0.1.Final</resteasy.bom.version>
+    <!--  this is the last jersey version, that supports jax rs 2:-->
+    <jersey.bom.version>2.35</jersey.bom.version>
 
     <!-- test frameworks -->
     <junit5.version>5.8.2</junit5.version>
@@ -51,6 +54,12 @@
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
         <version>${log4j2.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
@@ -82,6 +91,14 @@
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-bom</artifactId>
         <version>${resteasy.bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.glassfish.jersey/jersey-bom -->
+      <dependency>
+        <groupId>org.glassfish.jersey</groupId>
+        <artifactId>jersey-bom</artifactId>
+        <version>${jersey.bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

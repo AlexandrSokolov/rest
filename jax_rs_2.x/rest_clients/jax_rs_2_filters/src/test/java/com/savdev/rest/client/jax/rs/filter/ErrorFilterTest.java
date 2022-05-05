@@ -7,7 +7,6 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.google.common.collect.Sets;
 import com.test.commons.test.BaseTest;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -43,7 +42,7 @@ public class ErrorFilterTest extends BaseTest {
     WireMock wireMock = wmRuntimeInfo.getWireMock();
     wireMock.register(get(ERROR_URL)
       .willReturn(
-        aResponse().withStatus(HttpStatus.SC_CONFLICT)
+        aResponse().withStatus(Response.Status.CONFLICT.getStatusCode())
           .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
           .withBodyFile(ERROR_JSON)));
 
@@ -52,7 +51,7 @@ public class ErrorFilterTest extends BaseTest {
       new Consumer<RequestResponseInfo>() {
         @Override
         public void accept(RequestResponseInfo requestResponseInfo) {
-          Assertions.assertEquals(HttpStatus.SC_CONFLICT, requestResponseInfo.getResponseStatus());
+          Assertions.assertEquals(Response.Status.CONFLICT.getStatusCode(), requestResponseInfo.getResponseStatus());
           try {
             Assertions.assertEquals(
               IOUtils.toString(testInputStream(WIRE_MOCK_RESOURSES_FILES + ERROR_JSON),
@@ -92,7 +91,7 @@ public class ErrorFilterTest extends BaseTest {
     WireMock wireMock = wmRuntimeInfo.getWireMock();
     wireMock.register(get(ERROR_URL)
       .willReturn(
-        aResponse().withStatus(HttpStatus.SC_NOT_FOUND)
+        aResponse().withStatus(Response.Status.NOT_FOUND.getStatusCode())
           .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
           .withBodyFile(ERROR_JSON)));
 
@@ -101,7 +100,7 @@ public class ErrorFilterTest extends BaseTest {
       new Consumer<RequestResponseInfo>() {
         @Override
         public void accept(RequestResponseInfo requestResponseInfo) {
-          Assertions.fail("Must not be invoked for status = " + HttpStatus.SC_NOT_FOUND);
+          Assertions.fail("Must not be invoked for status = " + Response.Status.NOT_FOUND.getStatusCode());
         }
       });
 
@@ -111,7 +110,7 @@ public class ErrorFilterTest extends BaseTest {
       new ObjectMapper(),
       errorConsumer,
       (responseContext) ->
-        responseContext.getStatus() != HttpStatus.SC_NOT_FOUND
+        responseContext.getStatus() != Response.Status.NOT_FOUND.getStatusCode()
         && Sets.newHashSet(
             Response.Status.Family.CLIENT_ERROR,
             Response.Status.Family.SERVER_ERROR)
@@ -143,7 +142,7 @@ public class ErrorFilterTest extends BaseTest {
     WireMock wireMock = wmRuntimeInfo.getWireMock();
     wireMock.register(get(ERROR_URL)
       .willReturn(
-        aResponse().withStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR)
+        aResponse().withStatus(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
           .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
           .withBodyFile(ERROR_JSON)));
 
@@ -152,7 +151,9 @@ public class ErrorFilterTest extends BaseTest {
       new Consumer<RequestResponseInfo>() {
         @Override
         public void accept(RequestResponseInfo requestResponseInfo) {
-          Assertions.assertEquals(HttpStatus.SC_INTERNAL_SERVER_ERROR, requestResponseInfo.getResponseStatus());
+          Assertions.assertEquals(
+            Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+            requestResponseInfo.getResponseStatus());
         }
       });
 
@@ -162,7 +163,7 @@ public class ErrorFilterTest extends BaseTest {
       new ObjectMapper(),
       errorConsumer,
       (responseContext) ->
-        responseContext.getStatus() != HttpStatus.SC_NOT_FOUND
+        responseContext.getStatus() != Response.Status.NOT_FOUND.getStatusCode()
           && Sets.newHashSet(
             Response.Status.Family.CLIENT_ERROR,
             Response.Status.Family.SERVER_ERROR)

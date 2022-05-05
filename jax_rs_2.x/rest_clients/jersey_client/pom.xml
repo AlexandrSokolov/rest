@@ -9,10 +9,10 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>resteasy-client</artifactId>
+  <artifactId>jersey-client</artifactId>
   <packaging>jar</packaging>
 
-  <name>Resteasy Client</name>
+  <name>Jersey Rest Client</name>
 
   <dependencies>
     <dependency>
@@ -25,22 +25,12 @@
       <artifactId>javaee-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-client</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-codec</groupId>
-          <artifactId>commons-codec</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-io</groupId>
-          <artifactId>commons-io</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>

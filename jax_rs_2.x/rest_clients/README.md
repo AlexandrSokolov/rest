@@ -1,9 +1,12 @@
 
 ### Features of rest client:
 
+- [Rest client choice](#rest-client-choice)
 - [Request/response debugging](#requestresponse-debugging-logdebugfilter)
 - [Error handling](#error-handling-errorfilter)
+- [ClientHttpEngine control and customisation](#clienthttpengine-control-and-customisation)
 
+### Rest client choice
 
 ### Request/response debugging (`LogDebugFilter`)
 
@@ -153,3 +156,12 @@ class RestClient {
   }
 }
 ```
+
+### ClientHttpEngine control and customisation
+
+Supported by:
+[Resteasy ClientHttpEngine implementations](https://docs.jboss.org/resteasy/docs/5.0.3.Final/userguide/html_single/index.html#transport_layer)
+
+Not supported by:
+- Jax RS api
+- Jersey Rest Api
