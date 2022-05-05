@@ -9,17 +9,12 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>jax-rs-2-client</artifactId>
+  <artifactId>jax-rs-2-filters</artifactId>
   <packaging>jar</packaging>
 
-  <name>Jax Rs 2 Client Core</name>
+  <name>Jax Rs 2 Filters</name>
 
   <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>jax-rs-2-filters</artifactId>
-      <version>${project.version}</version>
-    </dependency>
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
@@ -57,10 +52,6 @@
           <artifactId>jakarta.xml.bind-api</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
 
     <!-- TEST SCOPE:-->

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import static com.savdev.rest.client.jax.rs.filter.RequestResponseUtils.extractResponseBody;
 import static java.util.stream.Collectors.toMap;
 
-class RequestResponseInfo {
+public class RequestResponseInfo {
 
   public static final String NO_REQUEST_BODY = "NO REQUEST BODY";
   public static final String NO_RESPONSE_BODY = "NO RESPONSE BODY";

@@ -56,7 +56,9 @@
   <modules>
     <module>deps</module>
     <module>commons_test</module>
+    <module>rest_clients/jax_rs_2_filters</module>
     <module>rest_clients/jax_rs_2_client</module>
+    <module>rest_clients/resteasy_client</module>
   </modules>
 
   <build>

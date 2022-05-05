@@ -20,7 +20,7 @@ Functional notes:
 - You get request and response bodies if it is text
 - The filter tries to extract text information from gzip content.
 
-[Example is based on](jax_rs_2_client/src/test/java/com/savdev/rest/client/jax/rs/filter/LogDebugFilterTest.java):
+[Example is based on](jax_rs_2_filters/src/test/java/com/savdev/rest/client/jax/rs/filter/LogDebugFilterTest.java):
 ```java
 package com.company.service.rest;
 
@@ -66,7 +66,7 @@ Functional notes:
 - you could define both an error predicate and a consumer. 
   In that case you are responsible to identify if it is and error or not.
 
-[Example is based on](jax_rs_2_client/src/test/java/com/savdev/rest/client/jax/rs/filter/ErrorFilterTest.java):
+[Example is based on](jax_rs_2_filters/src/test/java/com/savdev/rest/client/jax/rs/filter/ErrorFilterTest.java):
 
 ```java
 package com.company.service.rest;

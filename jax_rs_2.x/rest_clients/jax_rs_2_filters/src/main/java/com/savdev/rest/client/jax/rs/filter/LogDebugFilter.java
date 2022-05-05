@@ -8,7 +8,7 @@ import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
 
-class LogDebugFilter implements ClientResponseFilter {
+public class LogDebugFilter implements ClientResponseFilter {
 
   private final Logger logger;
   private final ObjectMapper objectMapper;

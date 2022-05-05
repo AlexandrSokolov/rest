@@ -12,7 +12,7 @@
 
   <properties>
 
-    <javaee-api.version>7.0</javaee-api.version>
+    <javaee-api.version>8.0</javaee-api.version>
     <google-guava.version>31.1-jre</google-guava.version>
     <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
     <log4j2.version>2.17.2</log4j2.version>
