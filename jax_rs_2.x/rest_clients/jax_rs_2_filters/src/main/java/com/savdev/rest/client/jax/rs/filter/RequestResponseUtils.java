@@ -21,8 +21,7 @@ public class RequestResponseUtils {
     MediaType.APPLICATION_XML,
     MediaType.TEXT_PLAIN,
     MediaType.TEXT_XML,
-    MediaType.TEXT_HTML,
-    "gzip");
+    MediaType.TEXT_HTML);
 
   public static String extractResponseBody(
     final ClientResponseContext responseContext){
@@ -98,9 +97,9 @@ public class RequestResponseUtils {
 
   private static boolean isTextualResponse(final ClientResponseContext responseContext){
     return responseContext.getHeaders() != null
-      && responseContext.getHeaders().containsKey(HttpHeaders.CONTENT_ENCODING)
+      && responseContext.getHeaders().containsKey(HttpHeaders.CONTENT_TYPE)
       && TEXT_CONTENT_HEADERS.stream().anyMatch(header ->
-      responseContext.getHeaders().getFirst(HttpHeaders.CONTENT_ENCODING).equalsIgnoreCase(header));
+      responseContext.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE).equalsIgnoreCase(header));
   }
 
 }

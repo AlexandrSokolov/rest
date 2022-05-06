@@ -60,6 +60,7 @@
     <module>rest_clients/jax_rs_2_client</module>
     <module>rest_clients/resteasy_client</module>
     <module>rest_clients/jersey_client</module>
+    <module>rest_clients/resteasy_proxy_client</module>
   </modules>
 
   <build>

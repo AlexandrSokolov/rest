@@ -1,29 +1,31 @@
 package com.savdev.rest.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.savdev.rest.client.jackson.JacksonObjectMapperProvider;
 import com.savdev.rest.client.jax.rs.filter.ErrorFilter;
 import com.savdev.rest.client.jax.rs.filter.LogDebugFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
 import javax.ws.rs.HttpMethod;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.util.Map;
+import java.util.Optional;
 
-public class ResteasyClient {
+public class ExampleResteasyClient {
 
-  private final Logger logger = LogManager.getLogger(ResteasyClient.class);
+  private final Logger logger = LogManager.getLogger(ExampleResteasyClient.class);
 
   public <T> Response sendRequest(
     final String url,
-    final HttpMethod httpMethod,
+    final String httpMethod,
     final MultivaluedMap<String, Object> headers,
     final Map.Entry<String, Object> queryParameter,
     final MediaType requestMediaType,
@@ -31,21 +33,25 @@ public class ResteasyClient {
     final ObjectMapper objectMapper,
     final Entity<T> requestBody) {
 
-    Client client = ClientBuilder.newBuilder().build();
+    ResteasyClient client = (ResteasyClient) ClientBuilder.newBuilder().build();
 
-    client.register(LogDebugFilter.instance(ResteasyClient.class, objectMapper));
+    //register object mapper
+    client.register(new JacksonObjectMapperProvider(objectMapper));
+    client.register(LogDebugFilter.instance(ExampleResteasyClient.class, objectMapper));
     client.register(ErrorFilter.instance(
       objectMapper,
-      logger::error)); //log the request and response
+      logger::error)); //log the request and response as error
 
-    WebTarget target = client.target(url)
-      .queryParam(queryParameter.getKey(), queryParameter.getValue());
+    ResteasyWebTarget target = Optional.ofNullable(queryParameter).isPresent() ?
+      client.target(url)
+        .queryParam(queryParameter.getKey(), queryParameter.getValue()) :
+      client.target(url);
 
     Invocation.Builder invocationBuilder = target
       .request(requestMediaType)
       .headers(headers)
       .accept(acceptMediaType);
-    switch (httpMethod.value()) {
+    switch (httpMethod) {
       case HttpMethod.GET: return invocationBuilder.get();
       case HttpMethod.HEAD: return invocationBuilder.head();
       case HttpMethod.DELETE: return invocationBuilder.delete();

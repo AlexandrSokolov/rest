@@ -33,8 +33,9 @@ public class GZipTransformer extends ResponseTransformer {
       gzipOut.write(body);
       gzipOut.close();
       return new Response.Builder()
-        .headers(new HttpHeaders(HttpHeader.httpHeader(
-          javax.ws.rs.core.HttpHeaders.CONTENT_ENCODING, "gzip")))
+        .headers(response.getHeaders()
+          .plus(HttpHeader.httpHeader(
+            javax.ws.rs.core.HttpHeaders.CONTENT_ENCODING, "gzip")))
         .body(baos.toByteArray())
         .build();
     } catch (final IOException e) {

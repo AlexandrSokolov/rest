@@ -43,7 +43,7 @@ public class ErrorFilterTest extends BaseTest {
     wireMock.register(get(ERROR_URL)
       .willReturn(
         aResponse().withStatus(Response.Status.CONFLICT.getStatusCode())
-          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(ERROR_JSON)));
 
     //Mockito cannot spy lambdas, must define via functional interface:
@@ -92,7 +92,7 @@ public class ErrorFilterTest extends BaseTest {
     wireMock.register(get(ERROR_URL)
       .willReturn(
         aResponse().withStatus(Response.Status.NOT_FOUND.getStatusCode())
-          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(ERROR_JSON)));
 
     //Mockito cannot spy lambdas, must define via functional interface:
@@ -143,7 +143,7 @@ public class ErrorFilterTest extends BaseTest {
     wireMock.register(get(ERROR_URL)
       .willReturn(
         aResponse().withStatus(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
-          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(ERROR_JSON)));
 
     //Mockito cannot spy lambdas, must define via functional interface:

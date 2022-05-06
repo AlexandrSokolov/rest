@@ -36,7 +36,7 @@ public class LogDebugFilterTest extends BaseTest {
     wireMock.register(get(HTTP_URL)
       .willReturn(
         ok()
-          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(USER_JSON)));
 
     LogDebugFilter logDebugFilter = Mockito.spy(LogDebugFilter.instance(

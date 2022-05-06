@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class RequestResponseInfoGzipTest extends BaseTest {
     wireMock.register(get(GZIP_URL)
       .willReturn(
         ok()
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(USER_JSON)
           .withTransformers(GZipTransformer.NAME)
       ));

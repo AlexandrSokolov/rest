@@ -1,11 +1,11 @@
 RequestResponseInfo {
 	URL = http://localhost,
 	HTTP Method = 'POST',
-	Request Headers = {Content-Encoding=[application/json], Accept-Encoding=[application/json]},
+	Request Headers = {Content-Type=[application/json]},
 	Request Body = {
   "name" : "Alex"
 },
 	Response Status=200,
-	Response Headers={Content-Encoding=[application/json]},
+	Response Headers={Content-Type=[application/json]},
 	Response Body=NO RESPONSE BODY
 }

@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 
 import java.time.LocalDateTime;
 import java.util.AbstractMap;
-import java.util.Date;
 import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -43,13 +42,13 @@ public class JaxRsClientTest {
       .withQueryParam("testParam", equalTo("some Value"))
       .willReturn(
         ok()
-          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(USER_JSON)));
 
     try (Response response = jaxRsClient.sendRequest(
       wmRuntimeInfo.getHttpBaseUrl() + HTTP_URL,
       HttpMethod.POST,
-      new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT_ENCODING, MediaType.APPLICATION_JSON)),
+      new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)),
       new AbstractMap.SimpleEntry<>("testParam", "some Value"),
       MediaType.APPLICATION_JSON_TYPE,
       MediaType.APPLICATION_JSON_TYPE,
@@ -80,7 +79,7 @@ public class JaxRsClientTest {
     try (Response response = jaxRsClient.sendRequest(
       wmRuntimeInfo.getHttpBaseUrl() + HTTP_URL,
       HttpMethod.POST,
-      new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT_ENCODING, MediaType.APPLICATION_JSON)),
+      new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)),
       new AbstractMap.SimpleEntry<>("testParam", "Value"),
       MediaType.APPLICATION_JSON_TYPE,
       MediaType.APPLICATION_JSON_TYPE,

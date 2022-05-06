@@ -7,9 +7,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.google.common.collect.ImmutableMap;
 import com.test.commons.test.BaseTest;
 import org.apache.commons.io.IOUtils;
-import org.jboss.resteasy.client.jaxrs.internal.ResteasyClientBuilderImpl;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.HttpMethod;
@@ -46,21 +44,12 @@ public class RequestResponseInfoTest extends BaseTest {
 
   public static final String USER_JSON = "responses/user.json";
 
-  @BeforeAll
-  public static void init() {
-    System.setProperty(
-      ClientBuilder.JAXRS_DEFAULT_CLIENT_BUILDER_PROPERTY,
-      ResteasyClientBuilderImpl.class.getCanonicalName());
-  }
-
   @Test
   public void testToStringWithBody() throws IOException {
     ClientRequestContext clientRequestContext = mockRequest();
     when(clientRequestContext.getStringHeaders()).thenReturn(
       new MultivaluedHashMap<>(ImmutableMap.of(
-        HttpHeaders.CONTENT_ENCODING,
-        MediaType.APPLICATION_JSON,
-        HttpHeaders.ACCEPT_ENCODING,
+        HttpHeaders.CONTENT_TYPE,
         MediaType.APPLICATION_JSON)));
     when(clientRequestContext.getEntity()).thenReturn(ImmutableMap.of("name", "Alex"));
 
@@ -80,9 +69,9 @@ public class RequestResponseInfoTest extends BaseTest {
     ClientRequestContext clientRequestContext = mockRequest();
     when(clientRequestContext.getStringHeaders()).thenReturn(
       new MultivaluedHashMap<>(ImmutableMap.of(
-        HttpHeaders.CONTENT_ENCODING,
+        HttpHeaders.CONTENT_TYPE,
         MediaType.APPLICATION_FORM_URLENCODED,
-        HttpHeaders.ACCEPT_ENCODING,
+        HttpHeaders.ACCEPT,
         MediaType.APPLICATION_JSON)));
     when(clientRequestContext.getEntity()).thenReturn(new Form("user", "Alex S"));
 
@@ -103,7 +92,7 @@ public class RequestResponseInfoTest extends BaseTest {
     wireMock.register(get(TEST_URL)
       .willReturn(
         ok()
-          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(USER_JSON)));
 
     TestClientResponseFilter f = TestClientResponseFilter.instance(new ObjectMapper());
@@ -115,7 +104,7 @@ public class RequestResponseInfoTest extends BaseTest {
     client.register(f);
 
     WebTarget target = client.target(wmRuntimeInfo.getHttpBaseUrl() + TEST_URL);
-    try (Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get()) {
+    try (Response response = target.request().get()) {
 
       RequestResponseInfo rri = f.getRequestResponseInfo();
 
@@ -126,11 +115,7 @@ public class RequestResponseInfoTest extends BaseTest {
       Assertions.assertEquals(
         URI.create(wmRuntimeInfo.getHttpBaseUrl() + TEST_URL),
         rri.getUrl());
-      Assertions.assertEquals(
-        new MultivaluedHashMap<>(ImmutableMap.of(
-          HttpHeaders.ACCEPT,
-          MediaType.APPLICATION_JSON)),
-        rri.getRequestHeaders());
+      Assertions.assertTrue(rri.getRequestHeaders().isEmpty());
       Assertions.assertFalse(rri.getRequestBody().isPresent());
 
       //check response information
@@ -153,7 +138,7 @@ public class RequestResponseInfoTest extends BaseTest {
     wireMock.register(get(TEST_URL)
       .willReturn(
         ok()
-          .withHeader(HttpHeaders.CONTENT_ENCODING, MediaType.APPLICATION_OCTET_STREAM)
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM)
           .withBodyFile(USER_JSON)));
 
     TestClientResponseFilter f = TestClientResponseFilter.instance(new ObjectMapper());
@@ -197,7 +182,7 @@ public class RequestResponseInfoTest extends BaseTest {
     when(clientResponseContext.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
     when(clientResponseContext.getHeaders()).thenReturn(
       new MultivaluedHashMap<>(ImmutableMap.of(
-        HttpHeaders.CONTENT_ENCODING,
+        HttpHeaders.CONTENT_TYPE,
         MediaType.APPLICATION_JSON)));
     when(clientResponseContext.hasEntity()).thenReturn(false);
     return clientResponseContext;
