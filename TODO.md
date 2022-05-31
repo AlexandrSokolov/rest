@@ -1,3 +1,6 @@
+### Matrix parameters,
+https://stackoverflow.com/questions/2048121/url-matrix-parameters-vs-query-parameters
+
 ### Connection pool configuration
 
 [With resteasy](https://www.baeldung.com/resteasy-client-tutorial)

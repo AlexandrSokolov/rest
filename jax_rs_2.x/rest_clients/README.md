@@ -4,11 +4,12 @@
 - [Rest client choice](#rest-client-choice)
 - [Request/response debugging](#requestresponse-debugging-logdebugfilter)
 - [Error handling](#error-handling-errorfilter)
+- [URL matrix parameters vs. query parameters](#url-matrix-parameters-vs-query-parameters)
 
 ### Rest client choice
 
-Preferable rest clients
-- [Resteasy rest client with proxy generation](resteasy_proxy_client)
+**Preferable rest clients**
+- [Resteasy rest client with proxy generation](resteasy_proxy_client/README.md)
 
 Advantages:
 - simplifies rest service creation -  you start with rest api definition, 
@@ -20,7 +21,7 @@ In case you work with simple requests and manually handle `javax.ws.rs.core.Resp
 it makes no difference between the following rest clients. You only set the right dependency.
 - [Jax Rs Client with Jersey client](jersey_client)
 - [Jax Rs Client with Resteasy client](resteasy_client)
-- [Jax Rs Client with no compile dependency on Jersey/Resteasy](jax_rs_2_client)
+- [Jax Rs Client with run-time dependency](jax_rs_2_client)
 
 ### Request/response debugging (`LogDebugFilter`)
 
@@ -170,3 +171,34 @@ class RestClient {
   }
 }
 ```
+### URL matrix parameters vs. query parameters
+
+Matrix parameters: `http://www.example.com/example-page;field1=value1;field2=value2;field3=value3/other-example-page`
+
+vs
+
+Query parameters `http://www.example.com/example-page?field1=value1&field2=value2&field3=value3`
+
+[Matrix parameters examples](resteasy_proxy_client/README.md#passing-matrix-parameters)
+
+1. Matrix parameters apply to a particular path element while query parameters apply to the request as a whole. 
+This comes into play when making a complex REST-style query to multiple levels of resources and sub-resources:
+
+`http://example.com/res/categories;name=foo/objects;name=green/?page=1`
+
+It comes down to namespacing.
+
+Note: The 'levels' of resources here are categories and objects.
+
+If only query parameters were used for a multi-level URL, you would end up with:
+
+`http://example.com/res?categories_name=foo&objects_name=green&page=1`
+
+This way you would also lose the clarity added by the locality of the parameters within the request. 
+
+2. When using a framework like JAX-RS, all the query parameters would show up within each resource handler, 
+leading to potential conflicts and confusion.
+
+3. Matrix parameters particular useful with the uri template when url is defined via (unnamed) parameters.
+
+[URL matrix parameters vs. query parameters on stackoverflow](https://stackoverflow.com/questions/2048121/url-matrix-parameters-vs-query-parameters)
