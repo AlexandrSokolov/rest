@@ -8,7 +8,7 @@
 - [Passing http cookie](#passing-http-cookie)
 - [Passing http header](#passing-header)
 - [Passing matrix parameter, like in `GET /categories;name=foo/objects;name=green`](#passing-matrix-parameters)
-- [Handling Responses](#responses-handling)
+- [Handling all attributes of responses, not only the body](#responses-handling)
 
 ### RESTEasy Proxy Framework Usage
 
@@ -55,3 +55,40 @@ Notes:
 [URL matrix parameters vs. query parameters on stackoverflow](https://stackoverflow.com/questions/2048121/url-matrix-parameters-vs-query-parameters)
 
 ### Responses handling
+
+Sometimes you are interested not only in the response body of a client request, 
+but also either the response code and/or response headers.
+
+You have the options:
+1. You may return a `javax.ws.rs.core.Response.Status` enumeration from your method calls:
+```java
+@Path("/")
+public interface MyProxy {
+   @POST
+   Response.Status updateSite(MyPojo pojo);
+}
+```
+2. If you are interested in everything, you can get it with the `javax.ws.rs.core.Response` class:
+```java
+@Path("/")
+public interface LibraryService {
+
+   @GET
+   @Produces("application/xml")
+   Response getAllBooks();
+}
+```
+Note: you must close Resource by the client:
+```java
+try(Response allBooks = libraryServiceProxy.getAllBooks()) { 
+  ...
+}
+```
+3. Alternatively to `javax.ws.rs.core.Response` you may return an interface 
+that represents the information contained in that class. 
+
+[Interface that represents response](src/test/java/com/savdev/rest/client/api/ResponseObjectApi.java)
+
+[Rest Api that uses the response interface](src/test/java/com/savdev/rest/client/api/ResponseObjectRestApi.java)
+
+[Unit Test](src/test/java/com/savdev/rest/client/ResponseObjectTest.java)
