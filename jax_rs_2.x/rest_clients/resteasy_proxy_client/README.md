@@ -78,12 +78,6 @@ public interface LibraryService {
    Response getAllBooks();
 }
 ```
-Note: you must close Resource by the client:
-```java
-try(Response allBooks = libraryServiceProxy.getAllBooks()) { 
-  ...
-}
-```
 3. Alternatively to `javax.ws.rs.core.Response` you may return an interface 
 that represents the information contained in that class. 
 

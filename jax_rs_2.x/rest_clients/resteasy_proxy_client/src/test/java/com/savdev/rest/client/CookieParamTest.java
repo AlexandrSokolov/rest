@@ -1,6 +1,5 @@
 package com.savdev.rest.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -19,12 +18,10 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.savdev.rest.client.api.CookieParamRestApi.COOKIE_PARAM_NAME;
 
 @WireMockTest
-public class CookieParamTest {
+public class CookieParamTest extends ResteasyProxyClientBaseTest<CookieParamRestApi> {
 
   public static final String RESPONSE_BODY = "cookie param test";
   public static final String COOKIE_VALUE = "test value";
-
-  ResteasyProxyClient resteasyClient = new ResteasyProxyClient();
 
   @Test
   public void testCookieParam(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -37,12 +34,12 @@ public class CookieParamTest {
           .withHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
           .withBody(RESPONSE_BODY)));
 
-    String responseBody = resteasyClient.proxy(
-        wmRuntimeInfo.getHttpBaseUrl(),
-        new ObjectMapper(),
-        CookieParamRestApi.class)
-      .getCookieParam(COOKIE_VALUE);
+    try (ResteasyProxyClient<CookieParamRestApi> resteasyClient = resteasyProxyClient(
+      wmRuntimeInfo, CookieParamRestApi.class)) {
+      String responseBody = resteasyClient.proxy()
+        .getCookieParam(COOKIE_VALUE);
 
-    Assertions.assertEquals(RESPONSE_BODY, responseBody);
+      Assertions.assertEquals(RESPONSE_BODY, responseBody);
+    }
   }
 }

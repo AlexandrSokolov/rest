@@ -1,5 +1,20 @@
-### Matrix parameters,
-https://stackoverflow.com/questions/2048121/url-matrix-parameters-vs-query-parameters
+### closing the connection
+
+5.7. Closing connections
+The underlying connections are opened for each request and closed after the response is received and entity is processed (entity is read). See the following example:
+
+final WebTarget target = ... some web target
+Response response = target.path("resource").request().get();
+System.out.println("Connection is still open.");
+System.out.println("string response: " + response.readEntity(String.class));
+System.out.println("Now the connection is closed.");
+
+If you don't read the entity, then you need to close the response manually by response.close(). 
+Also if the entity is read into an InputStream (by response.readEntity(InputStream.class)), 
+the connection stays open until you finish reading from the InputStream. 
+In that case, the InputStream or the Response should be closed manually at the end of reading from InputStream.
+
+
 
 ### Connection pool configuration
 

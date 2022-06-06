@@ -1,6 +1,5 @@
 package com.savdev.rest.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -17,11 +16,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 
 @WireMockTest
-public class PathParamTest {
+public class PathParamTest extends ResteasyProxyClientBaseTest<PathParamRestApi> {
 
   public static final String RESPONSE_BODY = "path param test";
-
-  ResteasyProxyClient resteasyClient = new ResteasyProxyClient();
 
   @Test
   public void testPathParam(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -33,12 +30,12 @@ public class PathParamTest {
           .withHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
           .withBody(RESPONSE_BODY)));
 
-    String responseBody = resteasyClient.proxy(
-        wmRuntimeInfo.getHttpBaseUrl(),
-        new ObjectMapper(),
-        PathParamRestApi.class)
-      .getPathParam("alex");
+    try (ResteasyProxyClient<PathParamRestApi> resteasyClient = resteasyProxyClient(
+      wmRuntimeInfo, PathParamRestApi.class)) {
+      String responseBody = resteasyClient.proxy()
+        .getPathParam("alex");
 
-    Assertions.assertEquals(RESPONSE_BODY, responseBody);
+      Assertions.assertEquals(RESPONSE_BODY, responseBody);
+    }
   }
 }

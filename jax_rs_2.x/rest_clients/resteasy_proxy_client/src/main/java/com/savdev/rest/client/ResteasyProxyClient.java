@@ -1,41 +1,32 @@
 package com.savdev.rest.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.savdev.rest.client.jackson.JacksonObjectMapperProvider;
-import com.savdev.rest.client.jax.rs.filter.ErrorFilter;
-import com.savdev.rest.client.jax.rs.filter.LogDebugFilter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
-
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 
-public class ResteasyProxyClient {
+public class ResteasyProxyClient <T> implements AutoCloseable {
 
-  private final Logger logger = LogManager.getLogger(ResteasyProxyClient.class);
+  private final Client client;
 
-  public <T> T proxy(
+  private final T jaxRsInterfaceProxy;
+
+  public static <T> ResteasyProxyClientBuilder<T> builder(
     final String domain,
-    final ObjectMapper objectMapper,
-    final Class<T> jaxRsInterface) {
+    final Class<T> jaxRsInterfaceProxy) {
+    return ResteasyProxyClientBuilder.instance(domain, jaxRsInterfaceProxy);
+  }
 
-    try {
-      Client client = ClientBuilder.newClient();
+  ResteasyProxyClient(
+    final Client client,
+    T jaxRsInterfaceProxy) {
+    this.client = client;
+    this.jaxRsInterfaceProxy = jaxRsInterfaceProxy;
+  }
 
-      client.register(new JacksonObjectMapperProvider(objectMapper));
-      client.register(LogDebugFilter.instance(ResteasyProxyClient.class, objectMapper));
-      client.register(ErrorFilter.instance(
-        objectMapper,
-        logger::error)); //log the request and response
+  public T proxy() {
+    return jaxRsInterfaceProxy;
+  }
 
-      ResteasyWebTarget target = (ResteasyWebTarget) client.target(domain);
-
-      return target.proxy(jaxRsInterface);
-    } catch (Exception e){
-      throw new IllegalStateException("Could not create proxy for the rest interface: '"
-        + jaxRsInterface.getName() + "'. Reason: '" + e.getMessage()
-        + "'. Exception type: " + e.getClass().getCanonicalName());
-    }
+  @Override
+  public void close() {
+    client.close();
   }
 }

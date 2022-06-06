@@ -1,6 +1,5 @@
 package com.savdev.rest.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -20,11 +19,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.or;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 @WireMockTest
-public class QueryParamTest {
+public class QueryParamTest extends ResteasyProxyClientBaseTest<QueryParamRestApi> {
 
   public static final String RESPONSE_BODY = "query param test";
-
-  ResteasyProxyClient resteasyClient = new ResteasyProxyClient();
 
   @Test
   public void testQueryParam(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -38,12 +35,12 @@ public class QueryParamTest {
           .withHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
           .withBody(RESPONSE_BODY)));
 
-    String responseBody = resteasyClient.proxy(
-        wmRuntimeInfo.getHttpBaseUrl(),
-        new ObjectMapper(),
-        QueryParamRestApi.class)
-      .getQueryParam("alex", 100);
+    try (ResteasyProxyClient<QueryParamRestApi> resteasyClient = resteasyProxyClient(
+      wmRuntimeInfo, QueryParamRestApi.class)) {
+      String responseBody = resteasyClient.proxy().getQueryParam("alex", 100);
 
-    Assertions.assertEquals(RESPONSE_BODY, responseBody);
+      Assertions.assertEquals(RESPONSE_BODY, responseBody);
+    }
+
   }
 }

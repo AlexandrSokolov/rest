@@ -1,6 +1,5 @@
 package com.savdev.rest.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -18,12 +17,10 @@ import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 @WireMockTest
-public class HeaderParamTest {
+public class HeaderParamTest extends ResteasyProxyClientBaseTest<HeaderParamRestApi> {
 
   public static final String RESPONSE_BODY = "header param test";
   public static final String HEADER_VALUE = "test header";
-
-  ResteasyProxyClient resteasyClient = new ResteasyProxyClient();
 
   @Test
   public void testCookieParam(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -36,12 +33,12 @@ public class HeaderParamTest {
           .withHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
           .withBody(RESPONSE_BODY)));
 
-    String responseBody = resteasyClient.proxy(
-        wmRuntimeInfo.getHttpBaseUrl(),
-        new ObjectMapper(),
-        HeaderParamRestApi.class)
-      .getHeaderParam(HEADER_VALUE);
+    try (ResteasyProxyClient<HeaderParamRestApi> resteasyClient = resteasyProxyClient(
+      wmRuntimeInfo, HeaderParamRestApi.class)) {
+      String responseBody = resteasyClient.proxy()
+        .getHeaderParam(HEADER_VALUE);
 
-    Assertions.assertEquals(RESPONSE_BODY, responseBody);
+      Assertions.assertEquals(RESPONSE_BODY, responseBody);
+    }
   }
 }

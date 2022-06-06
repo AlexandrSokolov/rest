@@ -20,11 +20,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 @WireMockTest
-public class ResponseObjectTest {
+public class ResponseObjectTest extends ResteasyProxyClientBaseTest<ResponseObjectRestApi> {
 
   public static final String RESPONSE_BODY = "response object test";
-
-  ResteasyProxyClient resteasyClient = new ResteasyProxyClient();
 
   @Test
   public void testQueryParam(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -37,16 +35,15 @@ public class ResponseObjectTest {
           .withHeader(HttpHeaders.CONTENT_LENGTH, Integer.toString(RESPONSE_BODY.length()))
           .withBody(RESPONSE_BODY)));
 
-    final ResponseObjectApi responseObject = resteasyClient.proxy(
-        wmRuntimeInfo.getHttpBaseUrl(),
-        new ObjectMapper(),
-        ResponseObjectRestApi.class)
-      .get();
-    try(ClientResponse response = responseObject.response()) {
-      Assertions.assertEquals(RESPONSE_BODY, responseObject.body());
-      Assertions.assertEquals(Response.Status.OK.getStatusCode(), responseObject.status());
-      Assertions.assertEquals(MediaType.APPLICATION_JSON, responseObject.contentType());
-      Assertions.assertEquals(RESPONSE_BODY.length(), response.getLength());
+    try(ResteasyProxyClient<ResponseObjectRestApi> resteasyProxyClient = resteasyProxyClient(
+      wmRuntimeInfo, ResponseObjectRestApi.class)) {
+      final ResponseObjectApi responseObject = resteasyProxyClient.proxy().get();
+      try(ClientResponse response = responseObject.response()) {
+        Assertions.assertEquals(RESPONSE_BODY, responseObject.body());
+        Assertions.assertEquals(Response.Status.OK.getStatusCode(), responseObject.status());
+        Assertions.assertEquals(MediaType.APPLICATION_JSON, responseObject.contentType());
+        Assertions.assertEquals(RESPONSE_BODY.length(), response.getLength());
+      }
     }
   }
 }
