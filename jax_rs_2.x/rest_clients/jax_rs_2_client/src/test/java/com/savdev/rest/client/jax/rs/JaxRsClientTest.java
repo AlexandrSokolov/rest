@@ -45,7 +45,7 @@ public class JaxRsClientTest {
           .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withBodyFile(USER_JSON)));
 
-    try (Response response = jaxRsClient.sendRequest(
+    jaxRsClient.handleRequest(
       wmRuntimeInfo.getHttpBaseUrl() + HTTP_URL,
       HttpMethod.POST,
       new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)),
@@ -57,14 +57,14 @@ public class JaxRsClientTest {
         ImmutableMap.of(
           "address", "Town",
           "currentTime", LocalDateTime.now()),
-        MediaType.APPLICATION_JSON))) {
+        MediaType.APPLICATION_JSON),
+      response -> {
+        Assertions.assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
-      Assertions.assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-      String responseValue = response.readEntity(String.class);
-      Assertions.assertTrue(Optional.ofNullable(responseValue).isPresent());
-      Assertions.assertFalse(responseValue.isEmpty());
-    }
+        String responseValue = response.readEntity(String.class);
+        Assertions.assertTrue(Optional.ofNullable(responseValue).isPresent());
+        Assertions.assertFalse(responseValue.isEmpty());
+      });
   }
 
   @Test
@@ -76,7 +76,7 @@ public class JaxRsClientTest {
         aResponse()
           .withStatus(Response.Status.CONFLICT.getStatusCode())));
 
-    try (Response response = jaxRsClient.sendRequest(
+    jaxRsClient.handleRequest(
       wmRuntimeInfo.getHttpBaseUrl() + HTTP_URL,
       HttpMethod.POST,
       new MultivaluedHashMap<>(ImmutableMap.of(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)),
@@ -86,13 +86,13 @@ public class JaxRsClientTest {
       objectMapper(),
       Entity.entity(
         ImmutableMap.of("address", "Town"),
-        MediaType.APPLICATION_JSON))) {
-
-      Assertions.assertEquals(Response.Status.CONFLICT.getStatusCode(), response.getStatus());
-      String responseValue = response.readEntity(String.class);
-      Assertions.assertTrue(Optional.ofNullable(responseValue).isPresent());
-      Assertions.assertTrue(responseValue.isEmpty());
-    }
+        MediaType.APPLICATION_JSON),
+      response -> {
+        Assertions.assertEquals(Response.Status.CONFLICT.getStatusCode(), response.getStatus());
+        String responseValue = response.readEntity(String.class);
+        Assertions.assertTrue(Optional.ofNullable(responseValue).isPresent());
+        Assertions.assertTrue(responseValue.isEmpty());
+      });
   }
 
   private ObjectMapper objectMapper() {
