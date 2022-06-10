@@ -1,3 +1,10 @@
+### Is JAX-RS Client Thread Safe
+
+https://stackoverflow.com/questions/24700798/is-jax-rs-client-thread-safe
+https://stackoverflow.com/questions/33097230/reusing-jax-rs-client-in-multi-threaded-environment-with-resteasy
+https://stackoverflow.com/questions/43228051/memory-issue-with-jax-rs-using-jersey
+https://stackoverflow.com/questions/34566278/how-to-correctly-share-jax-rs-2-0-client
+
 ### http engine configuration, options and features
 
 
@@ -63,3 +70,8 @@ ResteasyWebTarget target = client.target(url)
 ResteasyClient client = (ResteasyClient)ClientBuilder.newClient();
 client.getScheduledExecutor();
 ```
+
+### TODO books
+- [RESTful Java with JAX-RS 2.0, 2nd Edition by Bill Burke, 2013](https://www.oreilly.com/library/view/restful-java-with/9781449361433/)
+- [RESTful Web Services by Leonard Richardson and Sam Ruby. A great introduction to REST.](https://www.oreilly.com/library/view/restful-web-services/9780596529260/)
+- [RESTful Web Services Cookbook by Subbu Allamaraju and Mike Amundsen](https://www.oreilly.com/library/view/restful-web-services/9780596809140/)
