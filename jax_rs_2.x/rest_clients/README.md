@@ -2,6 +2,8 @@
 ### Features of rest client:
 
 - [Rest client choice](#rest-client-choice)
+- [Usage of rest client in the managed environment](client_usage_managed))
+- [Usage of rest client, rules](client_usage/README.md)
 - [Request/response debugging](#requestresponse-debugging-logdebugfilter)
 - [Error handling](#error-handling-errorfilter)
 - [URL matrix parameters vs. query parameters](#url-matrix-parameters-vs-query-parameters)

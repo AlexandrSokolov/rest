@@ -61,6 +61,8 @@
     <module>rest_clients/resteasy_client</module>
     <module>rest_clients/jersey_client</module>
     <module>rest_clients/resteasy_proxy_client</module>
+    <module>rest_clients/client_usage</module>
+    <module>rest_clients/client_usage_managed</module>
   </modules>
 
   <build>
