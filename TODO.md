@@ -48,6 +48,10 @@ When implementing a pool several questions are raised:
 When the resource actually should be closed?
 How the resource should be shared between multiple threads?
 
+### Client features by:
+
+https://golb.hplar.ch/2019/01/java-11-http-client.html
+
 ### Async invocation
 
 Chapter 37. Asynchronous HTTP Request Processing
@@ -78,6 +82,8 @@ client.getScheduledExecutor();
 see 
 as a separete clientrequestfilter, see tools/budgetSnapshoter
 see AuthClientRequestFilterFactory in ikea fusion
+
+### http protocol and its versions and features
 
 ### TODO books
 - [RESTful Java with JAX-RS 2.0, 2nd Edition by Bill Burke, 2013](https://www.oreilly.com/library/view/restful-java-with/9781449361433/)
