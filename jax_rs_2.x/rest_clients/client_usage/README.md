@@ -41,7 +41,13 @@ Clients are heavy-weight objects that manage the client-side communication infra
 Initialization as well as disposal of a Client instance may be a rather expensive operation. 
 It is therefore advised to construct only a small number of Client instances in the application. 
 ```
-2. Client must be closed
+2. Be careful with `Client` sharing. The spec does not guarantee `Client` to be thread safe.
+
+The implementations do not say about thread safety neither.
+You need to analyse the backends of the implementation to clarify it.
+For instance Resteasy uses `ApacheHttpClient43Engine` http engine with thread safe [`PoolingHttpClientConnectionManager`](../http_engines/connection_pool/README.md)
+
+3. Client must be closed
 ```text
 Client instances must be properly closed before being disposed to avoid leaking resources.
 ```

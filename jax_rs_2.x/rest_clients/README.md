@@ -6,6 +6,7 @@
 - [Usage of rest client, rules](client_usage/README.md)
 - [Request/response debugging](#requestresponse-debugging-logdebugfilter)
 - [Error handling](#error-handling-errorfilter)
+- [Rest client features and http engines](http_engines/README.md)
 - [URL matrix parameters vs. query parameters](#url-matrix-parameters-vs-query-parameters)
 
 ### Rest client choice

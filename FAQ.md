@@ -5,4 +5,7 @@
 - [The right using of `javax.ws.rs.client.Client`](jax_rs_2.x/rest_clients/client_usage/README.md#javaxwsrsclientclient-using)
 - [Debug rest request/response by client](jax_rs_2.x/rest_clients/README.md#requestresponse-debugging-logdebugfilter)
 - [Handle errors by rest clients](jax_rs_2.x/rest_clients/README.md#error-handling-errorfilter)
+- [Connection Persistence](jax_rs_2.x/rest_clients/http_engines/README.md#connection-pool-and-connection-persistence)
+- [Connection Keep-Alive Strategy](jax_rs_2.x/rest_clients/http_engines/README.md#connection-keep-alive-strategy)
+- [Connection Eviction](jax_rs_2.x/rest_clients/http_engines/README.md#connection-eviction)
 - [URL matrix parameters vs. query parameters](rest_clients/README.md#url-matrix-parameters-vs-query-parameters)

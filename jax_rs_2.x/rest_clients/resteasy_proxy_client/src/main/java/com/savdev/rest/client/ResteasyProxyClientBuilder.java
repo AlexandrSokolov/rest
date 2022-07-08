@@ -18,6 +18,7 @@ import java.util.Optional;
 
 public class ResteasyProxyClientBuilder<T> {
 
+  Client client;
   String domain;
   ObjectMapper objectMapper;
   ErrorFilter errorFilter;
@@ -34,6 +35,11 @@ public class ResteasyProxyClientBuilder<T> {
     builder.jaxRsInterface = jaxRsInterface;
     builder.objectMapper = new ObjectMapper();
     return builder;
+  }
+
+  public ResteasyProxyClientBuilder<T> client(final Client client) {
+    this.client = client;
+    return this;
   }
 
   public ResteasyProxyClientBuilder<T> objectMapper(final ObjectMapper objectMapper) {
@@ -57,9 +63,10 @@ public class ResteasyProxyClientBuilder<T> {
   }
 
   public ResteasyProxyClient<T> build() {
-    Client client = null;
     try {
-      client = ClientBuilder.newClient();
+      if (client == null) {
+        client = ClientBuilder.newClient();
+      }
       client.register(new JacksonObjectMapperProvider(objectMapper));
       client.register(LogDebugFilter.instance(jaxRsInterface, objectMapper));
       if (this.errorFilter == null) {

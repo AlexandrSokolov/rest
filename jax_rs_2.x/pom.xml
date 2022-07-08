@@ -63,6 +63,7 @@
     <module>rest_clients/resteasy_proxy_client</module>
     <module>rest_clients/client_usage</module>
     <module>rest_clients/client_usage_managed</module>
+    <module>rest_clients/http_engines/apache_httpclient/apache_httpclient_resteasy</module>
   </modules>
 
   <build>
@@ -163,7 +164,7 @@
             <xmlOutput>true</xmlOutput>
             <!-- Configures the directory in which the XML report is created -->
             <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
-            <excludeFilterFile>${basedir}/../../../code_quality/findbugs-exclude.xml</excludeFilterFile>
+            <excludeFilterFile>${parent.relativePath}/../code_quality/findbugs-exclude.xml</excludeFilterFile>
           </configuration>
           <executions>
             <!--

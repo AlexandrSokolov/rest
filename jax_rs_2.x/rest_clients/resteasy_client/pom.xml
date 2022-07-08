@@ -6,7 +6,7 @@
     <groupId>com.savdev.rest.jax.rs</groupId>
     <artifactId>rest-jax-rs-2-parent</artifactId>
     <version>1.0.0</version>
-    <relativePath>../../pom.xml</relativePath>
+    <relativePath>../../</relativePath>
   </parent>
 
   <artifactId>resteasy-client</artifactId>

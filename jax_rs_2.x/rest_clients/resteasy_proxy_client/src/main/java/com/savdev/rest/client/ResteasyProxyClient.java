@@ -14,7 +14,7 @@ public class ResteasyProxyClient <T> implements AutoCloseable {
     return ResteasyProxyClientBuilder.instance(domain, jaxRsInterfaceProxy);
   }
 
-  ResteasyProxyClient(
+  public ResteasyProxyClient(
     final Client client,
     T jaxRsInterfaceProxy) {
     this.client = client;

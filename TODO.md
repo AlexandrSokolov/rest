@@ -1,32 +1,31 @@
-### Is JAX-RS Client Thread Safe
+### Client authentications
 
-https://stackoverflow.com/questions/24700798/is-jax-rs-client-thread-safe
-https://stackoverflow.com/questions/33097230/reusing-jax-rs-client-in-multi-threaded-environment-with-resteasy
-https://stackoverflow.com/questions/43228051/memory-issue-with-jax-rs-using-jersey
-https://stackoverflow.com/questions/34566278/how-to-correctly-share-jax-rs-2-0-client
+basic
+jwt
+web context
+2 factors, jwt via web context
+oauth
 
-### http engine configuration, options and features
+### Serialization, see existing projects
 
+### Generate new rest client via java generators
 
-### Connection pool configuration
+- as a separate module
+- as a package
 
-[With resteasy](https://www.baeldung.com/resteasy-client-tutorial)
+###  Add BM rest client module with serialiation test, auth filters and other convenient filters
 
-### Http Engine, what does it allow to configure
-```java
-ResteasyClient client = (ResteasyClient)ClientBuilder.newClient();
-client.httpEngine();
-```
-See [connection pool configuration](https://www.baeldung.com/resteasy-client-tutorial)
+### Server-side
 
-Supported by:
-[Resteasy ClientHttpEngine implementations](https://docs.jboss.org/resteasy/docs/5.0.3.Final/userguide/html_single/index.html#transport_layer)
+###
+Total time to live (TTL) set at construction time defines maximum life span of persistent connections regardless of their expiration setting. No persistent connection will be re-used past its TTL value.
 
-Not supported by:
-- Jax RS api
-- Jersey Rest Api
+The handling of stale connections was changed in version 4.4. Previously, the code would check every connection by default before re-using it. The code now only checks the connection if the elapsed time since the last use of the connection exceeds the timeout that has been set. The default timeout is set to 2000ms
 
 ### Caching
+
+35.2. Client "Browser" Cache
+https://docs.jboss.org/resteasy/docs/5.0.3.Final/userguide/html_single/index.html
 
 How can I cache/reuse the resource?
 https://stackoverflow.com/questions/54428593/in-java-how-to-check-that-autocloseable-close-has-been-called
@@ -50,6 +49,10 @@ When the resource actually should be closed?
 How the resource should be shared between multiple threads?
 
 ### Async invocation
+
+Chapter 37. Asynchronous HTTP Request Processing
+https://docs.jboss.org/resteasy/docs/5.0.3.Final/userguide/html_single/index.html
+
 ```java
 ResteasyClient client = (ResteasyClient)ClientBuilder.newClient();
 client.asyncInvocationExecutor()
@@ -70,6 +73,11 @@ ResteasyWebTarget target = client.target(url)
 ResteasyClient client = (ResteasyClient)ClientBuilder.newClient();
 client.getScheduledExecutor();
 ```
+
+### authentication
+see 
+as a separete clientrequestfilter, see tools/budgetSnapshoter
+see AuthClientRequestFilterFactory in ikea fusion
 
 ### TODO books
 - [RESTful Java with JAX-RS 2.0, 2nd Edition by Bill Burke, 2013](https://www.oreilly.com/library/view/restful-java-with/9781449361433/)
