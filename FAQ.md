@@ -1,5 +1,6 @@
 
 - [Rest client choice](jax_rs_2.x/rest_clients/README.md#rest-client-choice)
+- [Rest client features](rest_client/docs/rest-client-features.md)
 - [Using resteasy  proxy-generation, how to handle not only body, but other parts of response](jax_rs_2.x/rest_clients/resteasy_proxy_client/README.md#responses-handling)
 - ["releasing" a connection vs "closing" a connection.](jax_rs_2.x/rest_clients/client_usage/README.md#releasing-a-connection-vs-closing-a-connection)
 - [The right using of `javax.ws.rs.client.Client`](jax_rs_2.x/rest_clients/client_usage/README.md#javaxwsrsclientclient-using)

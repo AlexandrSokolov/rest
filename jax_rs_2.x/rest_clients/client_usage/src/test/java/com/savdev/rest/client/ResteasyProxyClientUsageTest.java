@@ -3,7 +3,7 @@ package com.savdev.rest.client;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import com.test.commons.test.BaseTest;
+import com.savdev.rest.commons.test.BaseTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.client.HttpClients;

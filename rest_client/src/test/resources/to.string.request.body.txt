@@ -1,0 +1,15 @@
+{
+  "URL" : "http://localhost",
+  "HTTP Method" : "POST",
+  "Request Headers" : {
+    "Content-Type" : [ "application/json" ]
+  },
+  "Request Body" : {
+    "name" : "Alex"
+  },
+  "Response Status" : 200,
+  "Response Headers" : {
+    "Content-Type" : [ "application/json" ]
+  },
+  "Response Body" : "NO RESPONSE BODY"
+}

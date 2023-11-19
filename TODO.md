@@ -1,3 +1,109 @@
+- create its own branch per client:
+```text
+In case you work with simple requests and manually handle `javax.ws.rs.core.Response`
+it makes no difference between the following rest clients. You only set the right dependency.
+- [Jax Rs Client with Jersey client](jersey_client)
+- [Jax Rs Client with Resteasy client](resteasy_client)
+- [Jax Rs Client with run-time dependency](jax_rs_2_client)
+```
+
+JaxRsExceptionsUtils.causeWebException(exception)
+.map(we -> JaxRsExceptionsUtils.errorFromResponse(we.getResponse()))
+.orElse(exception.getMessage())))
+
+- ability to copy-paste client without tests
+- client per wf resteasy version
+- ErrorHeaderSaverFilterTest and error processing
+- 
+- 
+- 
+- 
+- create a single client, that combines, filters, and other staff, like we did for bm
+- 
+
+crate closable java se object for using, debuging information into constructor
+check the state if the object is closed, if yes, write error
+
+produce that object in producer, 
+produce the reusable object in producer 
+create consumer via incject, with postconstruct and beforedestroy ethods inlcidng closing the object
+create runtime consumer, with postconstruct and beforedestroy ethods closing the object
+create consumer of reusable via incject, with postconstruct and beforedestroy ethods closing the object
+create runtime of reusable consumer, with postconstruct and beforedestroy ethods closing the object
+
+create rest service, check its scope, inject the 4 consumers, probably rest service per consumer
+create dse message subscriber, inject the 4 consumers, probably jms service per consumer
+create bean with application scope per consumer!
+
+write an application with request, app dependent scopes
+producing, closing, runtime injection
+
+choosing the right service, based on the env:
+web
+passwordless
+password-based
+
+WebClient {
+
+@Inject
+@WebClient
+UserRest
+
+}
+
+JmsClient {
+@Inject
+@PasswordlessClient
+}
+
+TestClient {
+@Intject
+@TestClient
+}
+
+Client {
+
+@Produces
+@WebClient
+
+@Passwordlessclient
+
+}
+
+#####
+
+class A {
+ @Inject
+ @WebClient
+ Rest client;
+
+ @Inject
+ SomeService;
+}
+
+class B {
+@Inject
+@Passwordless
+Rest client;
+
+@Inject
+SomeService;
+}
+
+class SomeService {
+
+  @Inject (it seems with consturctor only, hope the injected service will be )
+  Rest client
+}
+
+End-user knows the type of env, but in the dependency tree, the service has no idea, how it was invoked,
+As a result it is better to 
+
+#####  #####
+
+Who should close, those who produces, or those, who injects (it injects reusable should not close, I suppose)?
+It seems depends if we use class-based injection, method-based injection via producer or run-time producer
+
 ### Client authentications
 
 basic
@@ -8,6 +114,8 @@ oauth
 
 ### Serialization, see existing projects
 
+### OkHttp client without JAX RS
+
 ### Generate new rest client via java generators
 
 - as a separate module
@@ -16,6 +124,9 @@ oauth
 ###  Add BM rest client module with serialiation test, auth filters and other convenient filters
 
 ### Server-side
+
+
+### Apache CFX 
 
 ###
 Total time to live (TTL) set at construction time defines maximum life span of persistent connections regardless of their expiration setting. No persistent connection will be re-used past its TTL value.
@@ -84,6 +195,10 @@ as a separete clientrequestfilter, see tools/budgetSnapshoter
 see AuthClientRequestFilterFactory in ikea fusion
 
 ### http protocol and its versions and features
+
+### apache http client requests
+
+https://hc.apache.org/httpcomponents-client-4.5.x/index.html
 
 ### TODO books
 - [RESTful Java with JAX-RS 2.0, 2nd Edition by Bill Burke, 2013](https://www.oreilly.com/library/view/restful-java-with/9781449361433/)

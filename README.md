@@ -1,2 +1,3 @@
-- [Rest functionality based on JAX RS 2](jax_rs_2.x/README.md)
-- [Rest functionality based on Jakarta Restful WS (JAX RS 3)](jakarta_restful_ws_3.x/README.md)
+This project contains rest components based on `Resteasy 3.0.19.Final` for `WildFly 10`
+
+- [Documentation on rest client](rest_client/README.md)
