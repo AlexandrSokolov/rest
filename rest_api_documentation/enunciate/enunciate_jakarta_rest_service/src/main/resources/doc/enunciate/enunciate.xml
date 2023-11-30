@@ -1,0 +1,83 @@
+<enunciate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://enunciate.webcohesion.com/schemas/enunciate-${enunciate.version}.xsd"
+           version="${ENUNCIATE_API_VERSION}">
+
+  <title>${ENUNCIATE_API_NAME}</title>
+  <description>
+    <![CDATA[
+      <h2>Rest API Documentation</h2>
+      <p>Root context: <b>${ENUNCIATE_ROOT_CONTEXT}</b></p>
+    ]]>
+  </description>
+  <copyright>${ENUNCIATE_COPYRIGHT}</copyright>
+  <contact email="${ENUNCIATE_EMAIL}" name="${ENUNCIATE_API_NAME}" />
+
+  <api-classes>
+    <include pattern="com.savdev.rest.api.**" />
+    <include pattern="java.**" />
+    <exclude pattern="**" />
+  </api-classes>
+
+  <modules>
+    <!--    see also the attibute: freemarkerTemplate="template.fmt"-->
+    <docs
+      docsSubdir="enunciate/docs"
+      disableResourceLinks="true"
+      includeApplicationPath="true"
+      disabled="false"
+    />
+    <swagger
+      basePath="${ENUNCIATE_ROOT_CONTEXT}"
+      disabled="false">
+    </swagger>
+    <openapi disabled="false" />
+    <jackson
+      dateFormat="string"
+      disabled="false">
+      <accessor-visibility type="field" visibility="any" />
+      <examples>
+        <example type="java.time.Instant" example="2021-12-24T10:15:30+03:00"/>
+        <example type="java.time.OffsetDateTime" example="2021-12-25T10:15:30+05:00"/>
+        <example type="java.time.ZonedDateTime" example="2021-12-26T10:15:30+02:00"/>
+        <example type="java.time.LocalDateTime" example="2021-12-27T10:15:30-02:00"/>
+        <example type="java.time.LocalDate" example="2016-12-27"/>
+        <example type="java.time.LocalTime" example="10:15:30+05:00"/>
+        <example type="java.util.Date" example="2022-10-21T22:10:30-06:00"/>
+        <example type="java.sql.Date" example="2025-10-21T21:08:24+01:00"/>
+        <example type="java.sql.Timestamp" example="2027-10-21T21:07:24+00:00"/>
+        <example type="java.math.BigDecimal" example="5670.75"/>
+      </examples>
+    </jackson>
+    <jaxrs
+      groupBy="class"
+      disabled="false"
+      path-sort-strategy="depth_first"
+      datatype-detection="aggressive">
+      <application path="${ENUNCIATE_ROOT_CONTEXT}"/>
+    </jaxrs>
+
+    <!--    disabled modules: -->
+    <java-json-client disabled="true" />
+    <javascript-client disabled="true" />
+    <spring-web disabled="true" />
+    <jackson1 disabled="true" />
+    <jaxb disabled="true" />
+    <jaxws disabled="true" />
+    <java-xml-client disabled="true" />
+    <gwt-json-overlay disabled="true" />
+    <idl disabled="true" />
+    <c-xml-client disabled="true" />
+    <csharp-xml-client disabled="true" />
+    <obj-c-xml-client disabled="true" />
+    <php-json-client disabled="true" />
+    <php-xml-client disabled="true" />
+
+    <ruby-json-client disabled="true" />
+
+  </modules>
+
+  <warnings>
+    <disable name="source-files-not-found"/>
+  </warnings>
+
+</enunciate>

@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.1.1</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <groupId>com.savdev.rest.demo</groupId>
+  <artifactId>enunciate-jakarta-single-module</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+
+  <name>`enunciate` docs, single maven module</name>
+
+  <properties>
+
+    <!--  `src/main/resources/doc/enunciate/enunciate.xml`-->
+    <ENUNCIATE_API_PACKAGE>com.savdev.rest.api</ENUNCIATE_API_PACKAGE>
+    <ENUNCIATE_API_VERSION>${project.version}</ENUNCIATE_API_VERSION>
+    <ENUNCIATE_API_NAME>My Rest Api</ENUNCIATE_API_NAME>
+    <ENUNCIATE_ROOT_CONTEXT>/custom/context/path</ENUNCIATE_ROOT_CONTEXT>
+    <!--  root rest context must also include JakartaWsConfiguration.APPLICATION_PATH-->
+    <ENUNCIATE_ROOT_REST_CONTEXT>${ENUNCIATE_ROOT_CONTEXT}/rest</ENUNCIATE_ROOT_REST_CONTEXT>
+    <ENUNCIATE_COPYRIGHT>SavDev, Co</ENUNCIATE_COPYRIGHT>
+    <ENUNCIATE_EMAIL>k@savdev.com</ENUNCIATE_EMAIL>
+
+    <!-- https://mvnrepository.com/artifact/com.webcohesion.enunciate/enunciate-core-annotations -->
+    <!-- https://mvnrepository.com/artifact/com.webcohesion.enunciate/enunciate-maven-plugin -->
+<!--    <enunciate.version>2.17.1</enunciate.version>-->
+    <enunciate.version>2.16.0</enunciate.version>
+
+    <!-- https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api -->
+    <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
+    <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-servlet-spring-boot-starter -->
+    <resteasy-servlet-spring-boot-starter.version>6.0.2.Final</resteasy-servlet-spring-boot-starter.version>
+
+    <java.version>17</java.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
+      <version>${jakarta.ws.rs-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-servlet-spring-boot-starter</artifactId>
+      <version>${resteasy-servlet-spring-boot-starter.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.webcohesion.enunciate</groupId>
+      <artifactId>enunciate-core-annotations</artifactId>
+      <version>${enunciate.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.webcohesion.enunciate</groupId>
+        <artifactId>enunciate-maven-plugin</artifactId>
+        <version>${enunciate.version}</version>
+        <configuration>
+          <skipEnunciate>false</skipEnunciate>
+
+          <configFile>${project.resources[0].directory}/doc/enunciate/enunciate.xml</configFile>
+          <!-- default value for docsDir: site-->
+          <docsDir>${project.build.directory}</docsDir>
+        </configuration>
+        <executions>
+          <execution>
+<!--            <phase>package</phase>-->
+            <goals>
+               <goal>docs</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>${maven-resources-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>copy-enunciate-docs</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/classes/static/docs</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/target/enunciate/docs</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <environmentVariables>
+            <server.servlet.context-path>${ENUNCIATE_ROOT_CONTEXT}</server.servlet.context-path>
+          </environmentVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
