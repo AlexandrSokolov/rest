@@ -1,5 +1,11 @@
 {
   "id": 777,
   "name": "test item",
-  "time": "2025-08-24T18:35:06.091903206+02:00[Europe/Berlin]"
+  "time": "2025-08-24T18:35:06.091903206+02:00[Europe/Berlin]",
+  "state": "STARTED",
+  "distance": {
+    "name": "KILOMETER",
+    "unit": "km",
+    "meters": 1000.0
+  }
 }

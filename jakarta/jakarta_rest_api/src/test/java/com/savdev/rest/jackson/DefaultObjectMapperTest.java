@@ -1,19 +1,17 @@
 package com.savdev.rest.jackson;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.savdev.rest.api.Item;
+import com.savdev.rest.dto.DistanceInMeters;
+import com.savdev.rest.dto.Item;
+import com.savdev.rest.dto.ItemState;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 import java.util.Optional;
 
 class DefaultObjectMapperTest {
@@ -44,7 +42,7 @@ class DefaultObjectMapperTest {
       DefaultObjectMapper.instance()
         .writerWithDefaultPrettyPrinter()
         .writeValueAsString(
-        new Item(ITEM_ID, ITEM_NAME, ZONED_DATE_TIME, AMOUNT))
+        new Item(ITEM_ID, ITEM_NAME, ZONED_DATE_TIME, AMOUNT, ItemState.STARTED, DistanceInMeters.KILOMETER))
         .replaceAll("\" :", "\":")
     );
   }
@@ -55,7 +53,7 @@ class DefaultObjectMapperTest {
   @Test
   public void testDeserialisationFromString2Dto4Responses() throws Exception {
     Assertions.assertEquals(
-      new Item(ITEM_ID, ITEM_NAME, ZONED_DATE_TIME, AMOUNT),
+      new Item(ITEM_ID, ITEM_NAME, ZONED_DATE_TIME, AMOUNT, ItemState.STARTED, DistanceInMeters.KILOMETER),
       DefaultObjectMapper.instance().readValue(
         getClass().getClassLoader().getResourceAsStream("item.json"),
         Item.class));

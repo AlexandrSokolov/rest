@@ -2,16 +2,34 @@
   {
     "id": 777,
     "name": "test item 1",
-    "time": "2025-08-24T18:35:06.091903206+02:00[Europe/Berlin]"
+    "time": "2025-08-24T18:35:06.091903206+02:00[Europe/Berlin]",
+    "state": "INIT",
+    "distance": {
+      "name": "KILOMETER",
+      "unit": "km",
+      "meters": 1000.0
+    }
   },
   {
     "id": 888,
     "name": "test item 2",
-    "time": "2024-08-24T18:35:06.091903206+02:00[Europe/Berlin]"
+    "time": "2024-08-24T18:35:06.091903206+02:00[Europe/Berlin]",
+    "state": "COMPLETED",
+    "distance": {
+      "name": "INCH",
+      "unit": "inches",
+      "meters": 0.0254
+    }
   },
   {
     "id": 999,
     "name": "test item 3",
-    "time": "2025-08-24T18:35:06.091903206+02:00[Europe/Berlin]"
+    "time": "2025-08-24T18:35:06.091903206+02:00[Europe/Berlin]",
+    "state": "FINISHED",
+    "distance": {
+      "name": "CENTIMETER",
+      "unit": "cm",
+      "meters": 0.01
+    }
   }
 ]

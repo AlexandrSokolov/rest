@@ -1,9 +1,3 @@
-### jakarta, rest api
-
-enum serialiation and deserialation from jax_rs/jax_rs_resteasy_api
-
-with documentation
-
 ### jakarta, rest api, file uploading
 
 see also 
@@ -32,6 +26,8 @@ and standard objectMapper - not the customized one!
 ### jax rs - based on jakararta examples
 
 ### remove old_solutions
+
+### rest client with invalid rest interface
 
 ### Spring @GetMapping vs @GetExchange
 

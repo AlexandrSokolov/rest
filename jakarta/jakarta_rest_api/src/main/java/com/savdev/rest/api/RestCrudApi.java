@@ -1,6 +1,7 @@
 package com.savdev.rest.api;
 
 
+import com.savdev.rest.dto.Item;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
