@@ -8,6 +8,10 @@
   </appender>
 
   <logger name="com.savdev.rest" level="DEBUG"/>
+  <!--  logs only data transmitted to and from the server: -->
+  <logger name="org.apache.http.wire" level="DEBUG"/>
+  <logger name="org.apache.hc.client5.http.wire" level="DEBUG"/>
+  <logger name="com.github.tomakehurst.wiremock" level="DEBUG"/>
 
   <root level="info">
     <appender-ref ref="STDOUT"/>

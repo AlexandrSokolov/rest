@@ -23,6 +23,7 @@
 
     <!-- logging frameworks -->
     <log4j-api.version>2.25.1</log4j-api.version>
+    <jcl-over-slf4j.version>2.0.17</jcl-over-slf4j.version>
     <!-- logging frameworks with test scopes only:-->
     <slf4j-api.version>2.0.17</slf4j-api.version>
     <logback.version>1.5.18</logback.version>
@@ -62,12 +63,57 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
+      <!-- LOGGING DEPENDENCIES START:-->
+      <!--  use log4j api in the app: -->
       <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
         <version>${log4j-api.version}</version>
       </dependency>
+      <!--  to align slf4j api version and fix the warnings in the tests:
+      SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+      SLF4J: Defaulting to no-operation (NOP) logger implementation
+      SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+      Note: not needed to add explicitly in the child modules
+      -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j-api.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!--  to redirect log4j calls to slf4j implementation: -->
+      <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-to-slf4j -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-to-slf4j</artifactId>
+        <version>${log4j-to-slf4j.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!--    to redirect commons-logging to slf4j implementation-->
+      <!-- https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${jcl-over-slf4j.version}</version>
+      </dependency>
+      <!-- logback implementation of slf4j: -->
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-core</artifactId>
+        <version>${logback.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- LOGGING DEPENDENCIES END-->
 
       <!-- TEST SCOPE:-->
       <dependency>
@@ -95,32 +141,8 @@
         <version>${wiremock.version}</version>
         <scope>test</scope>
       </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>${slf4j-api.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-core</artifactId>
-        <version>${logback.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>${logback.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-to-slf4j -->
-      <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-to-slf4j</artifactId>
-        <version>${log4j-to-slf4j.version}</version>
-        <scope>test</scope>
-      </dependency>
+
+
     </dependencies>
   </dependencyManagement>
 

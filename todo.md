@@ -1,9 +1,3 @@
-### jakarta, rest api, docs
-
-purpose,
-issues to consider
-dependencies, what should and should not depend on
-
 ### jakarta, rest api
 
 enum serialiation and deserialation from jax_rs/jax_rs_resteasy_api
@@ -38,3 +32,7 @@ and standard objectMapper - not the customized one!
 ### jax rs - based on jakararta examples
 
 ### remove old_solutions
+
+### Spring @GetMapping vs @GetExchange
+
+https://stackoverflow.com/questions/78476824/whats-the-difference-between-getmapping-and-getexchange
