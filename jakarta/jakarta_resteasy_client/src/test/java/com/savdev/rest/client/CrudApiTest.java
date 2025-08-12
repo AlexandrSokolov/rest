@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 @WireMockTest
-class JakartaResteasyRestClientTest {
+class CrudApiTest {
 
   private static final Logger logger = LogManager.getLogger();
 
@@ -43,7 +43,7 @@ class JakartaResteasyRestClientTest {
           .withBodyFile(ITEMS_LIST_BODY_FILE_NAME)));
 
     try (var restClient = new JakartaResteasyRestClient(wmRuntimeInfo.getHttpBaseUrl())) {
-      var items = restClient.restApiProxy().getItems();
+      var items = restClient.restCrudApiProxy().getItems();
       Assertions.assertNotNull(items);
       Assertions.assertEquals(3, items.size());
       Assertions.assertEquals(LAST_ITEM_ID, items.getLast().id());
@@ -61,7 +61,7 @@ class JakartaResteasyRestClientTest {
           .withBodyFile(ITEM_BODY_FILE_NAME)));
 
     try (var restClient = new JakartaResteasyRestClient(wmRuntimeInfo.getHttpBaseUrl())) {
-      var item = restClient.restApiProxy().getById(ITEM_ID);
+      var item = restClient.restCrudApiProxy().getById(ITEM_ID);
       Assertions.assertNotNull(item);
       Assertions.assertEquals(ITEM_ID, item.id());
       Assertions.assertEquals(ITEM_NAME, item.name());

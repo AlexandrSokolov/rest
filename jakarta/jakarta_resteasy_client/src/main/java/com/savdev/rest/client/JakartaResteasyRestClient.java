@@ -1,5 +1,6 @@
 package com.savdev.rest.client;
 
+import com.savdev.rest.api.MultiPartFileUploadingApi;
 import com.savdev.rest.api.RestCrudApi;
 import com.savdev.rest.jackson.CustomObjectMapperProvider;
 import jakarta.ws.rs.client.Client;
@@ -21,8 +22,12 @@ public class JakartaResteasyRestClient implements Closeable {
 
   }
 
-  public RestCrudApi restApiProxy() {
+  public RestCrudApi restCrudApiProxy() {
     return target.proxy(RestCrudApi.class);
+  }
+
+  public MultiPartFileUploadingApi restMultiPartFileUploadingApiProxy() {
+    return target.proxy(MultiPartFileUploadingApi.class);
   }
 
   @Override

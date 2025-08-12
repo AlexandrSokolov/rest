@@ -29,6 +29,19 @@ and standard objectMapper - not the customized one!
 
 ### rest client with invalid rest interface
 
+### testing client apps
+
+OkHttp MockWebServer or WireMock
+
+https://docs.spring.io/spring-framework/reference/testing/spring-mvc-test-client.html
+
 ### Spring @GetMapping vs @GetExchange
 
 https://stackoverflow.com/questions/78476824/whats-the-difference-between-getmapping-and-getexchange
+
+
+### server side file uploading with `jakarta.ws.rs.core.EntityPart`
+
+```java
+
+```
