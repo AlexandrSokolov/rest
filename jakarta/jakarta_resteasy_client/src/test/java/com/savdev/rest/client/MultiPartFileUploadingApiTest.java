@@ -8,6 +8,8 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -18,6 +20,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 @WireMockTest
 public class MultiPartFileUploadingApiTest {
+
+  private static final Logger logger = LogManager.getLogger();
 
   public static final String PART_NAME_1 = "file1";
   public static final String FILE_NAME_1 = PART_NAME_1 + ".txt";

@@ -1,7 +1,8 @@
 ### Http interface
 
 https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-http-interface
-
+https://docs.spring.io/spring-boot/reference/io/rest-client.html
+https://www.baeldung.com/spring-6-http-interface
 
 ### How to serve huge file over streaming rest?
 
