@@ -18,6 +18,7 @@
 
   <modules>
     <module>jakarta</module>
+    <module>spring</module>
   </modules>
 
 </project>

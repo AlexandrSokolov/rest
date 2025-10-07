@@ -1,3 +1,5 @@
+### 
+
 ### jakarta, rest api, file uploading
 
 see also 
@@ -135,6 +137,10 @@ Create a minimal test case that reproduces the error to isolate the problem and 
 
 ### go through docs:
 
+https://blog.payara.fish/a-preview-of-jakarta-rest-in-jakarta-ee
+https://jakarta.ee/learn/docs/jakartaee-tutorial/current/websvcs/rest/rest.html
 [Chapter 51. RESTEasy Client API](https://docs.jboss.org/resteasy/docs/4.6.0.Final/userguide/html/RESTEasy_Client_Framework.html)
 [Accessing REST Resources with the Jakarta REST Client API](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/websvcs/rest-client/rest-client.html)
 [Jakarta REST 3.1 by Examples](https://itnext.io/jakarta-rest-3-1-by-examples-dbe13fe6988c)
+- [RESTEasy Proxy Framework](https://docs.resteasy.dev/6.2/userguide/#_client_proxies)
+- [Spring HTTP Interface](https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-http-interface)

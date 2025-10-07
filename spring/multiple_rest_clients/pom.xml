@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.savdev.rest</groupId>
+    <artifactId>spring-rest-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>spring-multiple-rest-clients</artifactId>
+  <packaging>pom</packaging>
+
+  <name>Spring Multiple Rest Clients Demo</name>
+
+  <properties>
+
+    <spring-boot.version>3.5.6</spring-boot.version>
+
+    <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
+    <resteasy.bom.version>6.2.4.Final</resteasy.bom.version>
+    <jackson.bom.version>2.15.2</jackson.bom.version>
+
+    <!-- logging frameworks -->
+    <log4j-api.version>2.25.1</log4j-api.version>
+
+    <!-- test frameworks -->
+    <junit5.version>5.8.2</junit5.version>
+    <mockito.version>4.5.1</mockito.version>
+    <wiremock.version>3.13.1</wiremock.version>
+
+    <commons-io.version>2.20.0</commons-io.version>
+
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+  </properties>
+
+  <modules>
+    <module>rest_client</module>
+    <module>rest_client_lib_1</module>
+    <module>rest_client_lib_2</module>
+    <module>rest_libs_consumer_app</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>jakarta.ws.rs-api</artifactId>
+        <version>${jakarta.ws.rs-api.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-bom -->
+      <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-bom</artifactId>
+        <version>${resteasy.bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom -->
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${jackson.bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>${log4j-api.version}</version>
+      </dependency>
+      <!-- TEST SCOPE:-->
+      <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.wiremock/wiremock -->
+      <dependency>
+        <groupId>org.wiremock</groupId>
+        <artifactId>wiremock</artifactId>
+        <version>${wiremock.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+
+    </dependencies>
+  </dependencyManagement>
+
+</project>
