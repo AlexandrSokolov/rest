@@ -1,0 +1,13 @@
+logging:
+  level:
+    com:
+      savdev:
+        rest: info
+    org:
+      apache:
+        http:
+          headers: debug
+          wire: debug
+      springframework: info
+      jboss:
+        resteasy: info

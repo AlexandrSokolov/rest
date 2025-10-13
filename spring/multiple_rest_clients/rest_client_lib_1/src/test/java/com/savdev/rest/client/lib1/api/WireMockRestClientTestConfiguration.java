@@ -1,21 +1,21 @@
-package com.savdev.rest.sb.app.configs;
+package com.savdev.rest.client.lib1.api;
 
 import com.savdev.rest.client.lib1.config.Lib1RestClientConfiguration;
 import jakarta.ws.rs.client.ClientRequestFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import static com.savdev.rest.sb.app.configs.AppConfiguration.SERVER_URL;
-
 @Configuration
-@ComponentScan({
-  "com.savdev.rest.client.lib1.service",
-})
-public class Lib1RestConf implements Lib1RestClientConfiguration {
+@ComponentScan("com.savdev.rest.client.lib1")
+public class WireMockRestClientTestConfiguration implements Lib1RestClientConfiguration {
+
+  @Value("${wiremock.server.baseUrl}")
+  private String wireMockUrl;
 
   @Override
   public String serverUrl() {
-    return SERVER_URL;
+    return wireMockUrl;
   }
 
   @Override

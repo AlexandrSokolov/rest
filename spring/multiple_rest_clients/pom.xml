@@ -28,6 +28,7 @@
     <junit5.version>5.8.2</junit5.version>
     <mockito.version>4.5.1</mockito.version>
     <wiremock.version>3.13.1</wiremock.version>
+    <wiremock-spring-boot.version>3.10.6</wiremock-spring-boot.version>
 
     <commons-io.version>2.20.0</commons-io.version>
 
@@ -99,7 +100,13 @@
         <version>${wiremock.version}</version>
         <scope>test</scope>
       </dependency>
-
+      <!-- https://mvnrepository.com/artifact/org.wiremock.integrations/wiremock-spring-boot -->
+      <dependency>
+        <groupId>org.wiremock.integrations</groupId>
+        <artifactId>wiremock-spring-boot</artifactId>
+        <version>${wiremock-spring-boot.version}</version>
+        <scope>test</scope>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>

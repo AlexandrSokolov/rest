@@ -1,4 +1,4 @@
-package com.savdev.rest.client.lib2.api;
+package com.savdev.rest.client.lib1.api;
 
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
@@ -17,23 +17,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ContextConfiguration(classes = { WireMockRestClientTestConfiguration.class })
 @EnableWireMock
-class RestApi2Test {
+class RestApi1Test {
 
-  public static final String STR_VALUE = "\"rest value #2\"";
+  public static final String STR_VALUE = "\"rest value #1\"";
 
   @Autowired
-  private RestApi2 restApi2;
+  private RestApi1 restApi1;
 
   @Test
   public void getStrValue() {
-    stubFor(get(urlPathMatching(RestApi2.BASE_URL))
+    stubFor(get(urlPathMatching(RestApi1.BASE_URL))
       .willReturn(
         ok()
           .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
           .withHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
           .withBody(STR_VALUE)));
 
-    assertEquals(STR_VALUE, restApi2.getStrValue());
+    assertEquals(STR_VALUE, restApi1.getStrValue());
   }
 
 }

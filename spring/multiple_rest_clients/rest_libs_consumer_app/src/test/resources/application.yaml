@@ -1,0 +1,9 @@
+logging:
+  level:
+    com:
+      savdev:
+        rest: debug
+    org:
+      springframework: debug
+      jboss:
+        resteasy: info

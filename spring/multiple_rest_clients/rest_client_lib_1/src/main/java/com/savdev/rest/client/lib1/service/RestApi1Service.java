@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RestApi1Service extends BaseRestClientService<RestApi1> implements RestApi1 {
 
-
   public RestApi1Service(Lib1RestClientConfiguration restClientConfiguration) {
-    super(restClientConfiguration);
+    super(
+      restClientConfiguration.serverUrl(),
+      restClientConfiguration.authFilter());
   }
 
   @Override

@@ -19,9 +19,9 @@ public abstract class BaseRestClientService<T> {
   private RestClient<T> restClient;
 
   public BaseRestClientService(
-    RestClientConfiguration restClientConfiguration) {
-    this.serverUrl = restClientConfiguration.serverUrl();
-    this.authFilter = restClientConfiguration.authFilter();
+    String serverUrl, ClientRequestFilter authFilter) {
+    this.serverUrl = serverUrl;
+    this.authFilter = authFilter;
   }
 
   public T proxyRestApi() {
@@ -34,8 +34,8 @@ public abstract class BaseRestClientService<T> {
 
   @PostConstruct
   public void init() {
-    restClient = RestClientBuilder.instance(this.serverUrl, getParameterClass())
-      .withAuth(authFilter)
+    restClient = RestClient.builder(this.serverUrl, getParameterClass())
+      .ifPresent(authFilter, RestClient.RestClientBuilder::withAuth)
       .build();
     logger.debug(() -> "Rest client initialization complete for: '" + getParameterClass() + "'");
   }
