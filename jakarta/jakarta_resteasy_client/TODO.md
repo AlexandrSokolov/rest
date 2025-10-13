@@ -1,4 +1,7 @@
 
+### testing with wiremock 
+
+
 
 - Simplifies rest client creation (how to pass only server url and authentication)
 - Requests serialization and responses deserialization
@@ -35,7 +38,32 @@ logging:
           wire: debug
 ```
 
+example of logging from wiremock:
+```text
+127.0.0.1 - POST /mappings
 
+Content-Type: [application/json]
+Host: [localhost:35395]
+Content-Length: [354]
+Connection: [keep-alive]
+User-Agent: [Apache-HttpClient/5.5 (Java/21.0.8)]
+{
+  "id" : "2cb8d3c1-8a69-48c0-9f8e-fbb5d39827f4",
+  "request" : {
+    "urlPathPattern" : "/api1",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "\"rest value #1\"",
+    "headers" : {
+      "Content-Type" : "application/json",
+      "Content-Encoding" : "UTF-8"
+    }
+  },
+  "uuid" : "2cb8d3c1-8a69-48c0-9f8e-fbb5d39827f4"
+}
+```
 
 ### Files uploading
 

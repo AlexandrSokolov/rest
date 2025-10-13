@@ -13,7 +13,7 @@
   <artifactId>sb-rest-consumer-no-libs</artifactId>
   <version>1.0.0</version>
 
-  <name>Spring Boot App Demo</name>
+  <name>Spring Boot App No Libs Demo</name>
   <description>Multiple Rest Clients without Libs Usage Demo</description>
 
   <properties>

@@ -1,4 +1,36 @@
-### 
+### testing
+
+1.only wiremock
+2. wiremock with Spring Boot
+with https://wiremock.org/docs/spring-boot/
+
+```java
+  @Test
+  public void getStrValue() {
+    stubFor(get(urlPathEqualTo(RestApi1.BASE_URL))
+      .willReturn(
+        ok()
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+          .withBody(STR_VALUE)));
+```
+vs:
+```java
+@WireMockTest
+class CrudApiTest {
+
+
+  @Test
+  void getItems(WireMockRuntimeInfo wmRuntimeInfo) throws IOException {
+    var wireMock = wmRuntimeInfo.getWireMock();
+    wireMock.register(get(urlPathEqualTo(RestCrudApi.BASE_URL))
+      .willReturn(
+        ok()
+          .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+          .withHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+          .withBodyFile(ITEMS_LIST_BODY_FILE_NAME)));
+```
+
 
 ### jakarta, rest api, file uploading
 
