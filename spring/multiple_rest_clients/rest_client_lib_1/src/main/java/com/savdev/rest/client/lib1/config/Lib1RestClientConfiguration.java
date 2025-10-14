@@ -1,10 +1,6 @@
 package com.savdev.rest.client.lib1.config;
 
-import jakarta.ws.rs.client.ClientRequestFilter;
+import com.savdev.rest.commons.RestClientConfiguration;
 
-public interface Lib1RestClientConfiguration {
-
-  String serverUrl();
-
-  ClientRequestFilter authFilter();
+public interface Lib1RestClientConfiguration extends RestClientConfiguration {
 }
