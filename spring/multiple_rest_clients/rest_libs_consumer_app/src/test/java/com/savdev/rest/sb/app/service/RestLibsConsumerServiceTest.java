@@ -2,13 +2,11 @@ package com.savdev.rest.sb.app.service;
 
 import com.savdev.rest.client.lib1.api.RestApi1;
 import com.savdev.rest.client.lib2.api.RestApi2;
-import com.savdev.rest.sb.app.service.config.Lib2WireMockConf;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.wiremock.spring.EnableWireMock;
 
 import java.nio.charset.StandardCharsets;
