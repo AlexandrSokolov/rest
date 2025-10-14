@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 public class RestApi2Service extends BaseRestClientService<RestApi2> implements RestApi2 {
 
   public RestApi2Service(RestClient2Conf restClientConfiguration) {
-    super(restClientConfiguration);
+    super(
+      restClientConfiguration.serverUrl2(),
+      restClientConfiguration.authFilter());
   }
 
   @Override

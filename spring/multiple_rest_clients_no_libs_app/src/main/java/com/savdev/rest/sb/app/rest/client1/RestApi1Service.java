@@ -10,7 +10,9 @@ public class RestApi1Service extends BaseRestClientService<RestApi1> implements 
 
 
   public RestApi1Service(RestClient1Conf restClientConfiguration) {
-    super(restClientConfiguration);
+    super(
+      restClientConfiguration.serverUrl1(),
+      restClientConfiguration.authFilter());
   }
 
   @Override

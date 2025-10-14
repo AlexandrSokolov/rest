@@ -1,6 +1,5 @@
 package com.savdev.rest.sb.app.rest;
 
-import com.savdev.rest.sb.app.configs.rest.RestClientConfiguration;
 import com.savdev.rest.sb.app.rest.jackson.ObjectMapperProvider;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -25,9 +24,10 @@ public abstract class BaseRestClientService<T> {
   private T proxyRestApi;
 
   public BaseRestClientService(
-    RestClientConfiguration restClientConfiguration) {
-    this.serverUrl = restClientConfiguration.serverUrl();
-    this.authFilter = restClientConfiguration.authFilter();
+    String serverUrl,
+    ClientRequestFilter authFilter) {
+    this.serverUrl = serverUrl;
+    this.authFilter = authFilter;
   }
 
   public T proxyRestApi() {
@@ -38,8 +38,8 @@ public abstract class BaseRestClientService<T> {
   public void init() {
     try {
       this.client = ClientBuilder.newClient();
-      client.register(Optional.ofNullable(authFilter)
-        .orElseThrow(() -> new IllegalStateException("Rest client authentication filter cannot be null")));
+      Optional.ofNullable(authFilter)
+        .ifPresent(auth -> this.client.register(authFilter));
       client.register(ObjectMapperProvider.class);
       ResteasyWebTarget target = (ResteasyWebTarget) client.target(serverUrl);
       this.proxyRestApi = target.proxy(getParameterClass());

@@ -1,26 +1,18 @@
 package com.savdev.rest.sb.app.configs.rest;
 
-import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
-
 @Configuration
-public class RestClient2Conf implements RestClientConfiguration {
+public class RestClient2Conf {
 
-  @Override
-  public String serverUrl() {
-    return "/t2222tttt";
+  public static final String BASE_URL_WITH_CUSTOM_CONTEXT = "http://localhost:8080/some/custom/context";
+
+  public String serverUrl2() {
+    return BASE_URL_WITH_CUSTOM_CONTEXT;
   }
 
-  @Override
   public ClientRequestFilter authFilter() {
-    return new ClientRequestFilter() {
-      @Override
-      public void filter(ClientRequestContext clientRequestContext) throws IOException {
-
-      }
-    };
+    return null;
   }
 }
