@@ -1,7 +1,8 @@
 - [Rest client useful features](jakarta/jakarta_resteasy_client/README.md#commons-rest-client-useful-features)
-- [Architectural approaches to create rest clients](#architectural-approaches-to-create-rest-clients)
+- [Architectural approaches to use rest clients](#architectural-approaches-to-use-rest-clients)
+- [Declarative REST API Definition](#declarative-rest-api-definition)
 - [Roles in rest-client based applications implemented via rest interfaces](#roles-in-rest-client-based-applications-implemented-via-rest-interfaces)
-- [Commons rest client module responsibilities](#commons-rest-client-module-responsibilities)
+- [Commons rest client sharing](#commons-rest-client-sharing)
 - [Commons rest client features](#commons-rest-client-features)
 - [Rest API Module responsibilities](#rest-api-module-responsibilities)
 - [Dependencies in Rest API module](#dependencies-in-rest-api-module)
@@ -12,7 +13,7 @@
 - [How rest clients can be used in the apps?](#rest-client-consumer-application)
 
 
-### Architectural approaches to create rest clients
+### Architectural approaches to use rest clients
 
 - [HTTP client that offers a fluent API](https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-restclient)
 - [HTTP client based on templates](https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-resttemplate)
@@ -55,14 +56,15 @@ Benefits of declarative API definition:
 - [Rest client library](#rest-client-library)
 - [Rest client consumer application](#rest-client-consumer-application)
 
-### Commons rest client module responsibilities
+### Commons rest client sharing
 
 Rest clients simplified its creation in the application. 
-When it is used based on REST API definition, you cannot share a single instance 
+When it is used based on REST API definition, you cannot share a single rest client instance 
+for different rest interfaces 
 and must create rest client per rest interface.
 
 
-#### Commons rest client features
+### Commons rest client features
 
 - [Simplifies rest client creation (how to pass only server url and authentication)]
 - [Rest client destruction]
@@ -84,9 +86,7 @@ and must create rest client per rest interface.
   Use this option if you need the solution as soon as possible and 
   switching to the library-based solution is considered as a time-consuming approach.
 
-### Rest API module
-
-#### Rest API module responsibilities:
+### Rest API module responsibilities:
 - definition of rest-specific details via REST interfaces
 - DTO objects, used as method parameters or return types
 - data format - date, time, money (BigDecimal), boolean
@@ -114,8 +114,7 @@ and must create rest client per rest interface.
     - [`RestApi1`](spring/multiple_rest_clients_no_libs_app/src/main/java/com/savdev/rest/sb/app/rest/client1/RestApi1.java)
     - [`RestApi2`](spring/multiple_rest_clients_no_libs_app/src/main/java/com/savdev/rest/sb/app/rest/client2/RestApi2.java)
 
-
-#### Dependencies in Rest API module
+### Dependencies in Rest API module
 
 Any API module must include as few dependencies as possible.
 
@@ -125,7 +124,7 @@ For a rest api these are dependencies on
 - additional dependencies, like `com.fasterxml.jackson.datatype:jackson-datatype-jsr310`,
   that allow to customise `ObjectMapper` with specific features
 
-#### Who is responsible for rest API module creation?
+### Who is responsible for rest API module creation?
 
 REST API is tightly coupled to a technology.
 Rest consumers (clients) can choose any technology.
@@ -145,14 +144,14 @@ Additional reasons to define such modules by rest service creators:
 - You could generate `OpenAPI` docs from the rest interfaces and method comments that document the logic.
   It allows any rest client that uses client generation based on `OpenAPI` use your REST API module indirectly.
 
-#### Rest API technology choice
+### Rest API technology choice
 
 Currently, you could define rest API with:
 - [Spring Web annotations](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html)
 - [Jakarta REST API (former `JAX-RS`)](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/websvcs/rest/rest.html)
 - `JAX-RS` API
 
-#### Using Spring Web annotations for REST API definition
+### Using Spring Web annotations for REST API definition
 
 Spring defines its Web annotations like `@HttpExchange`in:
 ```xml
@@ -172,10 +171,7 @@ As a result:
 - If you want to share rest api with other customers, you need to use Spring application with other solutions,
   like [RESTEasy Proxy Framework](https://docs.resteasy.dev/7.0/userguide/#_client_proxies).
 
-
-### Rest client library
-
-#### Rest client library responsibilities
+### Rest client library responsibilities
 - provide functionality, injectable via interface
 - extend rest api with hiding rest-specific complexity, to make it more easily for its consumers 
 - expose clear requirements for the rest library configuration
