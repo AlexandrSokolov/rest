@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.savdev.rest.dto.DistanceInMeters;
+import com.savdev.rest.dto.MultipleFormatsFieldValue;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -25,6 +26,7 @@ public class DefaultObjectMapper {
         .addDeserializer(BigDecimal.class, new MoneyDeserializer())
         .addDeserializer(ZonedDateTime.class, new ZonedDateTimeDeserializer())
         .addDeserializer(DistanceInMeters.class, new DistanceInMetersDeserializer())
+        .addDeserializer(MultipleFormatsFieldValue.class, new MultipleFormatsValueDeserializer())
       );
   }
 }
